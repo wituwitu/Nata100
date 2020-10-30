@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile-style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index-style.css' %}">
+    <!-- Optional JavaScript -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <title>{Título del meme}</title>
+</head>
+<body>
+
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Iniciar Sesión</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-3">
+                    <div class="md-form mb-3">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <label data-error="wrong" data-success="right" for="username">Nombre de Usuario</label>
+                        <input type="text" id="username" name="username" class="form-control validate form-textbox">
+                    </div>
+
+                    <div class="md-form mb-4">
+                        <i class="fas fa-lock prefix grey-text"></i>
+                        <label data-error="wrong" data-success="right" for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" class="form-control validate form-textbox">
+                    </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn form-btn px-5">Iniciar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<form action="{% url 'register' %}" method="post">
+    {% csrf_token %}
+    <div class="modal fade" id="modalRegisterForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Registro</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ml-3" style="font-size: 18px">
+                    <div class="md-form mb-2">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <label data-error="wrong" data-success="right" for="username">Nombre de Usuario</label>
+                        <input type="text" id="username" name="username" class="form-control validate form-textbox">
+
+                    </div>
+
+                    <div class="md-form mb-2">
+                        <label data-error="wrong" data-success="right" for="discord-tag">Discord Tag</label>
+                        <i class="fas fa-user prefix grey-text">#</i>
+                        <input type="text" id="discord-tag" name="discord-tag" class="form-control validate form-textbox">
+                    </div>
+
+                    <div class="md-form mb-2">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <label data-error="wrong" data-success="right" for="email">E-Mail</label>
+                        <input type="email" id="email" name="email" class="form-control validate form-textbox">
+                    </div>
+
+                    <div class="md-form mb-2">
+                        <i class="fas fa-lock prefix grey-text"></i>
+                        <label data-error="wrong" data-success="right" for="password">Contraseña</label>
+                        <input type="password" id="password" name="password" class="form-control validate form-textbox">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn form-btn px-5">Crear cuenta</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<nav class="navbar bg-titlebar static-top">
+    <div class="container">
+        <a class="navbar-brand" style="color: white" href="#">Logo</a>
+        <button type="button" id="log-in-btn" class="btn px-4" data-toggle="modal" data-target="#modalLoginForm">Iniciar Sesión</button>
+    </div>
+</nav>
+
+<!-- Masthead -->
+<header class="masthead text-white text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto mb-5" style="opacity: 0.8">
+                <h1>¡Bienvenido a Nata100!</h1>
+                <h3>[Descripción breve sobre lo que hace especial a la aplicación web]</h3>
+            </div>
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                <form>
+                    <div class="row">
+                        <div class="col-12">
+                            <button type="button" id="reg-btn" class="btn px-5 mb-2" data-toggle="modal" data-target="#modalRegisterForm">Registrarse</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="line line-1">
+        <div class="wave wave1" style="background-image: url({% static '/images/1.png' %})"></div>
+    </div>
+    <div class="line line-2">
+        <div class="wave wave2" style="background-image: url({% static '/images/2.png' %})"></div>
+    </div>
+    <div class="line line-3">
+        <div class="wave wave3" style="background-image: url({% static '/images/3.png' %})"></div>
+    </div>
+</header>
+
+<section class="features-icons text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="features-icons-item mx-auto">
+                    <div class="features-icons-icon d-flex">
+                        <img class="card-img-icon" src="{% static '/images/icon-1.png' %}"/>
+                    </div>
+                    <h3>Crea tu usuario</h3>
+                    <p class="lead mb-0">Completa el formulario con los datos solicitados</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="features-icons-item mx-auto mb-4 mb-lg-0 mb-lg-3">
+                    <div class="features-icons-icon d-flex">
+                        <img class="card-img-icon" src="{% static '/images/icon-2.png' %}"/>
+                    </div>
+                    <h3>Selecciona un Juego</h3>
+                    <p class="lead mb-0">No sé que poner aquí :^)</p>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                    <div class="features-icons-icon d-flex">
+                        <img class="card-img-icon" src="{% static '/images/icon-3.png' %}"/>
+                    </div>
+                    <h3>Busca entre los perfiles</h3>
+                    <p class="lead mb-0">Selecciona el perfil que más te agrade y a jugar</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+</body>
+</html>

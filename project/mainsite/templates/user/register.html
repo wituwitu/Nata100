@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+</head>
+<body>
+    <h1> Registro </h1>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="username">Usuario</label>
+            <input type="text" class="form-control" id=username name="username" maxlength="32" required>
+        </div>
+
+        <div class="form-group">
+            <label for="mail">Mail</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="tagDiscord">Discord Tag</label>
+            <input type="text" class="form-control" id="tagDiscord" name="tagDiscord" maxlength="36" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Contraseña</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <label for="tagSteam">Steam Tag</label>
+            <input type="text" class="form-control" id="tagSteam" name="tagSteam">
+        </div>
+
+        <div class="form-group">
+            <label for="tagPSN">PSN Tag</label>
+            <input type="text" class="form-control" id="tagPSN" name="tagPSN">
+        </div>
+
+        <div class="form-group">
+            <label for="tagXbox">Xbox Tag</label>
+            <input type="text" class="form-control" id="tagXbox" name="tagXbox">
+        </div>
+
+        <div class="form-group">
+            <label for="tagSwitch">Switch Tag</label>
+            <input type="text" class="form-control" id="tagSwitch" name="tagSwitch">
+        </div>
+
+        <button type="submit">Crear usuario</button>
+    </form>
+</body>
+</html>

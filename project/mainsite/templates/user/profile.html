@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile-style.css' %}">
+    <!-- Optional JavaScript -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <title>Profile</title>
+</head>
+
+<body>
+
+<!-- Image and text -->
+<nav class="navbar navbar-light bg-titlebar static-top">
+    <div class="container">
+        <a class="navbar-brand" style="color: white" href="#">Logo</a>
+        <button type="button" id="profile-btn" class="btn px-4" onclick="">Ver Perfil</button>
+    </div>
+</nav>
+
+<div class="container" id="mainContainer">
+    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" data-interval="false">
+        <div class="carousel-inner">
+            <div class="carousel-item active" id="container-1">
+                <div class="container" style="color: white;">
+                    <div class="row">
+                        <div class="col-2 mt-4">
+                            <div class='img-round' id="profile-pic-1">
+                                <img class="circular-img cropped1" src="{% static '/images/lonk.jpg' %}" />
+                            </div>
+                        </div>
+                        <div class="col-8 mt-4 ml-1">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="diagonal username-tag" id="username-1">
+                                        <span>[USERNAME #1]</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="diagonal discord-tag" id="discord-1">
+                                        <span>[DISCORD #1]</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center">
+                                    <img class="plataform-img" src="{% static '/images/steam_logo.png' %}" />
+                                </div>
+                                <div class="col-4 plataform-tag text-center" id="steam-tag-1">
+                                    Steam Tag
+                                </div>
+                                <div class="col-1 text-center">
+                                    <img class="plataform-img" src="{% static '/images/switch_logo.png' %}" />
+                                </div>
+                                <div class="col-4 plataform-tag text-center" id="switch-tag-1">
+                                    Switch Tag
+                                </div>
+                            </div>
+                            <div class="row mt-1 mb-1">
+                                <div class="col-1 text-center">
+                                    <img class="plataform-img" src="{% static '/images/xbox_logo.png' %}" />
+                                </div>
+                                <div class="col-4 plataform-tag text-center" id="xbox-tag-1">
+                                    XBOX Tag
+                                </div>
+                                <div class="col-1 text-center">
+                                    <img class="plataform-img" src="{% static '/images/psn_logo.png' %}" />
+                                </div>
+                                <div class="col-4 plataform-tag text-center" id="psn-tag-1">
+                                    PSN Tag
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="diagonal desc-tag" id="description-msg-1">
+                        <span>Descripción</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container desc-container">
+                        AAA
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="diagonal desc-tag">
+                        <span>Personalidad</span>
+                    </div>
+                </div>
+                <div class="row mt-3 mb-2" style="margin-left: 10%" id="personality-traits-1">
+                    <div class="col-2 personality-tag text-center estratega">
+                        Estratega
+                    </div>
+                    <div class="col-2 personality-tag text-center flamer">
+                        Flamer
+                    </div>
+                    <div class="col-2 personality-tag text-center rusher">
+                        Rusher
+                    </div>
+                    <div class="col-2 personality-tag text-center noseque">
+                        Temp
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" id="container-2">
+                <div class="container" style="color: white;">
+                    <div class="row">
+                        <div class="col-2 mt-4">
+                            <div class='img-round' id="profile-pic-2">
+                                <img class="circular-img cropped1" src="{% static '/images/pikachu.jpg' %}" />
+                            </div>
+                        </div>
+                        <div class="col-8 mt-4 ml-1">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="diagonal username-tag" id="username-2">
+                                        <span>[USERNAME #2]</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="diagonal discord-tag" id="discord-2">
+                                        <span>[DISCORD #2]</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center">
+                                    <img class="plataform-img" src="{% static '/images/steam_logo.png' %}" />
+                                </div>
+                                <div class="col-4 plataform-tag text-center" id="steam-tag-2">
+                                    Steam Tag
+                                </div>
+                                <div class="col-1 text-center">
+                                    <img class="plataform-img" src="{% static '/images/switch_logo.png' %}" />
+                                </div>
+                                <div class="col-4 plataform-tag text-center" id="switch-tag-2">
+                                    Switch Tag
+                                </div>
+                            </div>
+                            <div class="row mt-1 mb-1">
+                                <div class="col-1 text-center">
+                                    <img class="plataform-img" src="{% static '/images/xbox_logo.png' %}" />
+                                </div>
+                                <div class="col-4 plataform-tag text-center" id="xbox-tag-2">
+                                    XBOX Tag
+                                </div>
+                                <div class="col-1 text-center">
+                                    <img class="plataform-img" src="{% static '/images/psn_logo.png' %}" />
+                                </div>
+                                <div class="col-4 plataform-tag text-center" id="psn-tag-2">
+                                    PSN Tag
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="diagonal desc-tag" id="description-msg-2">
+                        <span>Descripción</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container desc-container">
+                        AAA
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="diagonal desc-tag">
+                        <span>Personalidad</span>
+                    </div>
+                </div>
+                <div class="row mt-3 mb-2" style="margin-left: 10%" id="personality-traits-2">
+                    <div class="col-2 personality-tag text-center estratega">
+                        Estratega
+                    </div>
+                    <div class="col-2 personality-tag text-center flamer">
+                        Flamer
+                    </div>
+                    <div class="col-2 personality-tag text-center rusher">
+                        Rusher
+                    </div>
+                    <div class="col-2 personality-tag text-center noseque">
+                        Temp
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-item" id="container-3">
+                <div class="container" style="color: white;">
+                    <div class="row">
+                        <div class="col-2 mt-4">
+                            <div class='img-round' id="profile-pic-3">
+                                <img class="circular-img cropped1" src="{% static '/images/puff.jpg' %}" />
+                            </div>
+                        </div>
+                        <div class="col-8 mt-4 ml-1">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="diagonal username-tag" id="username-3">
+                                        <span>[USERNAME #3]</span>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="diagonal discord-tag" id="discord-3">
+                                        <span>[DISCORD #3]</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1 text-center">
+                                    <img class="plataform-img" src="{% static '/images/steam_logo.png' %}" />
+                                </div>
+                                <div class="col-4 plataform-tag text-center" id="steam-tag-3">
+                                    Steam Tag
+                                </div>
+                                <div class="col-1 text-center">
+                                    <img class="plataform-img" src="{% static '/images/switch_logo.png' %}" />
+                                </div>
+                                <div class="col-4 plataform-tag text-center" id="switch-tag-3">
+                                    Switch Tag
+                                </div>
+                            </div>
+                            <div class="row mt-1 mb-1">
+                                <div class="col-1 text-center">
+                                    <img class="plataform-img" src="{% static '/images/xbox_logo.png' %}" />
+                                </div>
+                                <div class="col-4 plataform-tag text-center" id="xbox-tag-3">
+                                    XBOX Tag
+                                </div>
+                                <div class="col-1 text-center">
+                                    <img class="plataform-img" src="{% static '/images/psn_logo.png' %}" />
+                                </div>
+                                <div class="col-4 plataform-tag text-center" id="psn-tag-3">
+                                    PSN Tag
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="diagonal desc-tag" id="description-msg-3">
+                        <span>Descripción</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="container desc-container">
+                        AAA
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="diagonal desc-tag">
+                        <span>Personalidad</span>
+                    </div>
+                </div>
+                <div class="row mt-3 mb-2" style="margin-left: 10%" id="personality-traits-3">
+                    <div class="col-2 personality-tag text-center estratega">
+                        Estratega
+                    </div>
+                    <div class="col-2 personality-tag text-center flamer">
+                        Flamer
+                    </div>
+                    <div class="col-2 personality-tag text-center rusher">
+                        Rusher
+                    </div>
+                    <div class="col-2 personality-tag text-center noseque">
+                        Temp
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</div>
+<a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="sr-only">Previous</span>
+</a>
+<a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="sr-only">Next</span>
+</a>
+
+
+<div class="row-cols-12 gameSearch">
+    <div class="container">
+        Buscando: [Nombre Juego]
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../css/profile-style.css">
+    <!-- Optional JavaScript -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <script src="../scripts.js"></script>
+
+    <title>Censo Mascotas: Estadisticas</title>
+  </head>
+
+  <body>
+
+    <div class="titleBar">
+      <div class="container">
+      <div class="row">
+        <div class="col-4" id="logo-top">
+          Inserte logo aquí
+        </div>
+        <div class="col-8">
+          <button type="button" id="profile-btn" class="btn px-5 mb-2">Ver Perfil</button>
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="container mt-3" id="profile-info-container">
+
+      <div class="row">
+        <div class="col-1 mt-4 mx-4">
+          <div class='img-round'>
+            <img class="circular-img cropped1" src="../images/pikachu.jpg" />
+          </div>
+        </div>
+        <div class="col-8 mt-4 ml-6">
+          <div class="row" id="username-tag">[USERNAME]</div>
+          <div class="row">
+            <div class="col-2 plataform-tag text-center">
+              Steam Tag
+            </div>
+            <div class="col-2 plataform-tag text-center">
+              PS4 Tag
+            </div>
+            <div class="col-2 plataform-tag text-center">
+              XBOX Tag
+            </div>
+            <div class="col-2 plataform-tag text-center">
+              Switch Tag
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+
+        <div class="col-3 mt-4 mx-4">
+          <div class="sub-container text-center">
+            Tags Personalidad
+            <div class="container personality-tag">
+              <div class="col-12">
+                <button type="button" id="add-btn" class="btn personality-button px-5 mb-2">Estratega</button>
+              </div>
+              <div class="col-12">
+                Personality Trait 2
+              </div>
+              <div class="col-12">
+                Personality Trait 3
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-8 mt-4 ml-6">
+          
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  </body>
+</html>

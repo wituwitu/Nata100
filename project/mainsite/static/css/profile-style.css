@@ -1,0 +1,592 @@
+@media (min-width: 1200px) {
+    .container{
+        max-width: 1500px;
+    }
+}
+
+body {
+    color: white;
+
+}
+
+navbar-brand {
+    color: white;
+}
+
+
+.titleBar {
+    font-size: 32px;
+    font-weight: lighter;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #121212;
+    color: white;
+    opacity: 0.8;
+}
+
+.bg-titlebar {
+    background-color: #121212;
+    color: white;
+}
+
+.ml-6 {
+  margin-left: 4.5rem;
+}
+
+
+#profile-info-container {
+    background-color: #bd0015;
+    color: white;
+}
+
+.circular-img {
+    border-radius: 50%;
+}
+
+
+
+#logo-top {
+    padding-right: 15%;
+}
+
+
+.carousel-control-prev {
+    margin-left: 5%;
+    background-color: #494a4c;
+    padding: 10px;
+    width: 35px;
+    margin-top: 27rem;
+    height: 35px;
+    border-radius: 500px;
+}
+
+.carousel-control-next {
+    margin-right: 5%;
+    background-color: #494a4c;
+    padding: 10px;
+    margin-top: 27rem;
+    width: 35px;
+    height: 35px;
+    border-radius: 500px;
+}
+
+.plataform-tag:hover {
+        box-shadow:
+        0 0 4px 2px #fff;  /* inner white */
+}
+
+#profile-btn {
+    background-color: #e00019;
+    font-weight: 600;
+    color: #d9d9d9;
+    font-size: 15px;
+    border-radius: 50px;
+    margin-left: 50%
+}
+
+#mainContainer {
+    margin-top: 2.4rem;
+    max-width: 1400px;
+    height: 740px;
+    border-radius: 10px;
+    background-color: #b40000;
+}
+
+.gameSearch {
+    margin-top: 2.4rem;
+    font-size: 20px;
+    padding: 15px;
+    background-color: #121212;
+}
+
+.username-tag {
+    font-size: 30px;
+    color: white;
+    width: 420px;
+	height: 50px;
+    margin-left: 25px;
+    background-color: #212122;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.discord-tag {
+    font-size: 30px;
+    color: #212121;
+    width: 420px;
+	height: 50px;
+    background-color: #dfdbe4;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+
+.desc-tag {
+    margin-top: 5%;
+    margin-left: 5%;
+    font-size: 23px;
+    color: white;
+    width: 200px;
+	height: 50px;
+    background-color: #222123;
+    padding-bottom: 5px;
+    margin-bottom: 5px;
+}
+
+.desc-container{
+    margin-top: 1rem;
+    max-width: 1000px;
+    height: 125px;
+    background-color: #7d0000;
+    border-radius: 5px;
+}
+
+.cropped1 {
+    width: 120px; /* width of container */
+    height: 120px; /* height of container */
+    object-fit: cover;
+}
+
+.plataform-img {
+    width:  25px; /* width of container */
+    height: 25px; /* height of container */
+}
+
+.plataform-tag {
+    font-size: 15px;
+    background-color: #121212;
+    margin-left: 10px;
+    border-radius: 25px;
+    color: #d9d9d9;
+}
+
+.personality-tag {
+    font-size: 12px;
+    padding: 4px;
+    margin-left: 10px;
+    border-radius: 5px;
+    color: #d9d9d9;
+    box-shadow: 2.5px 5px rgba(0, 0, 0, 0.5);
+}
+
+.estratega {
+    background-color: #00429c;
+}
+
+.flamer {
+    background-color: #9c0400;
+}
+
+.rusher {
+    background-color: #50009c;
+}
+
+.noseque {
+    background-color: #9a959c;
+    color: #232323;
+}
+
+.diagonal {
+    border-radius: 5px;
+	transform: skewX(30deg);
+	transform-origin: top;
+	margin-top: 5%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.diagonal > span {
+	transform: skewX(-30deg);
+}
+
+@media screen and (max-width: 1640px) {
+
+    #profile-btn {
+        background-color: #e00019;
+        font-weight: 300;
+        font-size: 13px;
+        color: #d9d9d9;
+        border-radius: 50px;
+        margin-left: 50%
+    }
+    #mainContainer {
+        margin-top: 2.4rem;
+        max-width: 1100px;
+        height: 740px;
+        border-radius: 10px;
+        background-color: #b40000;
+    }
+    .username-tag {
+        font-size: 25px;
+        color: white;
+        width: 320px;
+        height: 50px;
+        margin-left: 25px;
+        background-color: #212122;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+    .discord-tag {
+        font-size: 25px;
+        color: #212121;
+        width: 320px;
+        height: 50px;
+        background-color: #dfdbe4;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+    .desc-tag {
+        margin-top: 3%;
+        margin-left: 5%;
+        font-size: 20px;
+        color: white;
+        width: 180px;
+        height: 45px;
+        background-color: #222123;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+}
+
+@media screen and (max-width: 1320px) {
+
+    #profile-btn {
+        background-color: #e00019;
+        font-weight: 300;
+        font-size: 10px;
+        color: #d9d9d9;
+        border-radius: 50px;
+        margin-left: 50%
+    }
+    #mainContainer {
+        margin-top: 2.4rem;
+        max-width: 900px;
+        height: 740px;
+        border-radius: 10px;
+        background-color: #b40000;
+    }
+    .gameSearch {
+        margin-top: 2.4rem;
+        font-size: 20px;
+        padding: 15px;
+        background-color: #121212;
+    }
+    .cropped1 {
+        width:  100px; /* width of container */
+        height: 100px; /* height of container */
+        object-fit: cover;
+    }
+    .plataform-tag {
+        font-size: 12px;
+        padding: 4px;
+        background-color: #121212;
+        margin-left: 10px;
+        border-radius: 25px;
+        color: #d9d9d9;
+    }
+    .desc-container{
+        margin-top: 1rem;
+        max-width: 600px;
+        background-color: #7d0000;
+        border-radius: 5px;
+    }
+    .username-tag {
+        font-size: 20px;
+        color: white;
+        width: 250px;
+        height: 45px;
+        margin-left: 25px;
+        background-color: #212122;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+    .discord-tag {
+        font-size: 20px;
+        color: #212121;
+        width: 250px;
+        height: 45px;
+        background-color: #dfdbe4;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+    .desc-tag {
+        margin-top: 3%;
+        margin-left: 5%;
+        font-size: 20px;
+        color: white;
+        width: 180px;
+        height: 45px;
+        background-color: #222123;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+
+}
+
+@media screen and (max-width: 1120px) {
+
+    #profile-btn {
+        background-color: #e00019;
+        font-weight: 300;
+        font-size: 10px;
+        color: #d9d9d9;
+        border-radius: 50px;
+        margin-left: 50%
+    }
+    #mainContainer {
+        margin-top: 2.4rem;
+        max-width: 700px;
+        height: 740px;
+        border-radius: 10px;
+        background-color: #b40000;
+    }
+    .gameSearch {
+        margin-top: 2.4rem;
+        font-size: 20px;
+        padding: 15px;
+        background-color: #121212;
+    }
+    .cropped1 {
+        width:  100px; /* width of container */
+        height: 100px; /* height of container */
+        object-fit: cover;
+    }
+    .plataform-img {
+        width:  20px; /* width of container */
+        height: 20px; /* height of container */
+    }
+    .plataform-tag {
+        font-size: 10px;
+        padding: 4px;
+        background-color: #121212;
+        margin-left: 10px;
+        border-radius: 25px;
+        color: #d9d9d9;
+    }
+    .desc-container{
+        margin-top: 1rem;
+        max-width: 400px;
+        background-color: #7d0000;
+        border-radius: 5px;
+    }
+    .username-tag {
+        font-size: 15px;
+        color: white;
+        width: 180px;
+        height: 40px;
+        margin-left: 25px;
+        background-color: #212122;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+    .discord-tag {
+        font-size: 15px;
+        color: #212121;
+        width: 180px;
+        height: 40px;
+        background-color: #dfdbe4;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+    .desc-tag {
+        margin-top: 3%;
+        margin-left: 5%;
+        font-size: 15px;
+        color: white;
+        width: 180px;
+        height: 35px;
+        background-color: #222123;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+
+}
+
+@media screen and (max-width: 920px) {
+
+    #profile-btn {
+        background-color: #e00019;
+        font-weight: 300;
+        font-size: 10px;
+        color: #d9d9d9;
+        border-radius: 50px;
+        margin-left: 50%
+    }
+    #mainContainer {
+        margin-top: 2.4rem;
+        max-width: 550px;
+        height: 740px;
+        border-radius: 10px;
+        background-color: #b40000;
+    }
+    .gameSearch {
+        margin-top: 2.4rem;
+        font-size: 20px;
+        padding: 15px;
+        background-color: #121212;
+    }
+    #username-tag {
+        font-size: 50px;
+        color: white;
+    }
+    .cropped1 {
+        width:  50px; /* width of container */
+        height: 50px; /* height of container */
+        object-fit: cover;
+    }
+    .plataform-tag {
+        font-size: 8px;
+        padding: 4px;
+        background-color: #121212;
+        margin-left: 10px;
+        border-radius: 25px;
+        color: #d9d9d9;
+    }
+    .plataform-img {
+        width:  10px; /* width of container */
+        height: 10px; /* height of container */
+    }
+    .desc-container{
+        margin-top: 1rem;
+        max-width: 350px;
+        background-color: #7d0000;
+        border-radius: 5px;
+    }
+    .username-tag {
+        font-size: 10px;
+        color: white;
+        width: 140px;
+        height: 35px;
+        margin-left: 25px;
+        background-color: #212122;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+    .discord-tag {
+        font-size: 10px;
+        color: #212121;
+        width: 140px;
+        height: 35px;
+        background-color: #dfdbe4;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+    .desc-tag {
+        margin-top: 3%;
+        margin-left: 5%;
+        font-size: 12px;
+        color: white;
+        width: 150px;
+        height: 30px;
+        background-color: #222123;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+}
+
+@media screen and (max-width: 720px) {
+
+    #profile-btn {
+        background-color: #e00019;
+        font-weight: 300;
+        font-size: 10px;
+        color: #d9d9d9;
+        border-radius: 50px;
+        margin-left: 50%
+    }
+    #mainContainer {
+        margin-top: 2.4rem;
+        max-width: 300px;
+        height: 740px;
+        border-radius: 10px;
+        background-color: #b40000;
+    }
+    .gameSearch {
+        margin-top: 2.4rem;
+        font-size: 20px;
+        padding: 15px;
+        background-color: #121212;
+    }
+    .cropped1 {
+        width:  20px; /* width of container */
+        height: 20px; /* height of container */
+        object-fit: cover;
+    }
+    .plataform-img {
+        visibility: hidden;
+    }
+    .col-1 {
+        margin-right: -10px;
+    }
+    .desc-container{
+        margin-top: 1rem;
+        max-width: 250px;
+        background-color: #7d0000;
+        border-radius: 5px;
+    }
+    .username-tag {
+        font-size: 7px;
+        color: white;
+        width: 80px;
+        margin-left: 5%;
+        height: 25px;
+        background-color: #212122;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+    .discord-tag {
+        font-size: 7px;
+        color: #212121;
+        width: 80px;
+        height: 25px;
+        background-color: #dfdbe4;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+    .desc-tag {
+        margin-top: 3%;
+        margin-left: 5%;
+        font-size: 10px;
+        color: white;
+        width: 100px;
+        height: 30px;
+        background-color: #222123;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+    }
+    .personality-tag {
+        font-size: 8px;
+        padding: 2px;
+        margin-left: 10px;
+        border-radius: 5px;
+        color: #d9d9d9;
+    }
+}
+
+@media screen and (min-height: 937px) {
+    #mainContainer {
+        margin-top: 2.85rem;
+        max-width: 1400px;
+        height: 740px;
+        border-radius: 10px;
+        background-color: #b40000;
+    }
+    .gameSearch {
+        margin-top: 2.85rem;
+        font-size: 20px;
+        padding: 15px;
+        background-color: #121212;
+    }
+}
+
+@media screen and (min-height: 1080px) {
+    #mainContainer {
+        max-width: 1100px;
+        height: 873px;
+        border-radius: 10px;
+        background-color: #b40000;
+    }
+}
+

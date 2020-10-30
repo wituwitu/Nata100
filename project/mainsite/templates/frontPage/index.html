@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+    <h1>Here goes the front page</h1>
+    <hr>
+    {% if user.is_authenticated %}
+       <a href="{% url 'logout' %}">Cerrar sesión</a>
+    {% else %}
+       <a href="{% url 'register' %}">Registrarse</a>
+       <a href="{% url 'login' %}">Iniciar Sesión</a>
+    {% endif %}
+    <hr>
+</body>
+</html>
