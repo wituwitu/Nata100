@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.http.response import HttpResponse, HttpResponseRedirect
 
-from .models import User
+from .models import User, Alumne, Profe
 
 
 def frontPage(request):
@@ -13,7 +13,7 @@ def frontPage(request):
         if request.user.is_authenticated:
             return render(request, "frontPage/dashboard.html")
         else:
-            return render(request, 'frontPage/index_kurisu.html')
+            return render(request, 'frontPage/index.html')
 
 
 def getUser(request, userid):
@@ -66,18 +66,20 @@ def user_register(request):
         return render(request, 'user/register.html')
 
     elif request.method == 'POST':
-        attributes = {"username": None, "email": None, "discord-tag": None, "password": None}
-        optional = ["tagSteam", "tagPSN", "tagXbox", "tagSwitch"]
+
+        print(request.POST.keys())
+        attributes = {"username": None, "email": None, "password": None}
 
         for element in attributes.keys():
             if element not in request.POST:
                 return HttpResponseRedirect("/register/")
 
-        for element in optional:
-            if element in request.POST:
-                attributes[element] = request.POST[element]
-
-        _ = User.objects.create_user(username=request.POST["username"], email=request.POST["email"], tagDiscord=request.POST["discord-tag"], password=request.POST["password"])
+        if request.POST["tipo_usuario"] == "0":
+            _ = Alumne.objects.create_user(username=request.POST["username"], email=request.POST["email"],
+                                           password=request.POST["password"])
+        elif request.POST["tipo_usuario"] == "1":
+            _ = Profe.objects.create_user(username=request.POST["username"], email=request.POST["email"],
+                                          password=request.POST["password"])
 
         return HttpResponseRedirect('/formulario/')
 
