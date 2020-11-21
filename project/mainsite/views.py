@@ -21,7 +21,6 @@ def getUser(request, userid):
     The view to request an user profile
     """
     if request.method == 'GET':
-        # TODO implement
         return render(request, "user/profile.html")
 
 
@@ -64,25 +63,52 @@ def user_register(request):
     """
     if request.method == 'POST':
 
+        username = request.POST["username"]
+        email = request.POST["email"]
+        password = request.POST["password"]
+
         if request.POST["tipo_usuario"] == "0":
-            _ = Alumne.objects.create_user(username=request.POST["username"], email=request.POST["email"],
-                                           password=request.POST["password"])
-            return HttpResponseRedirect('/formulario_alumne/')
+            _ = Alumne.objects.create_user(username=username, email=email,
+                                           password=password)
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return render(request, 'frontPage/formulario_alumne.html')
 
         elif request.POST["tipo_usuario"] == "1":
-            _ = Profe.objects.create_user(username=request.POST["username"], email=request.POST["email"],
-                                          password=request.POST["password"])
-            return HttpResponseRedirect('/formulario_profe/')
+            _ = Profe.objects.create_user(username=username, email=email,
+                                          password=password)
+            return render(request, 'frontPage/formulario_profe.html')
 
 
 def formulario_alumne(request):
-    if request.method == 'POST':
+    return render(request, 'frontPage/formulario_alumne.html')
 
-        region = request.POST["regiones"]
-        comuna = request.POST["comunas"]
+def formulario_profe(request):
+    return render(request, 'frontPage/formulario_profe.html')
 
-        return HttpResponseRedirect('/dashboard/')
 
+def formulario_alumne_post(request):
+    user = request.user
+    if user.is_authenticated:
+        if request.method == 'POST':
+            region = request.POST["regiones"]
+            comuna = request.POST["comunas"]
+            user.region = region
+            user.comuna = comuna
+            user.save()
+    return HttpResponseRedirect('/dashboard/')
+
+
+def formulario_profe_post(request):
+    user = request.user
+    if user.is_authenticated:
+        if request.method == 'POST':
+            region = request.POST["regiones"]
+            comuna = request.POST["comunas"]
+            user.region = region
+            user.comuna = comuna
+            user.save()
+    return HttpResponseRedirect('/dashboard/')
 
 
 def dashboard(request):

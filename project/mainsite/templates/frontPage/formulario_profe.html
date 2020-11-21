@@ -3,13 +3,13 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Nata&#x1F4AF; | Formulario de Alumne </title>
+    <title>Nata&#x1F4AF; | Formulario de Profe </title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
 ¡Bienvenid@ a Nata100! Contesta las siguientes preguntas para completar tu perfil.
 
-<form action="{% url 'formulario_alumne_post' %}" method="post">
+<form action="{% url 'formulario_profe_post' %}" method="post">
     {% csrf_token %}
         <div class="modal-dialog" role="document">
             <div class="modal-content">
