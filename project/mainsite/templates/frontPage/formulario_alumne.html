@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nata&#x1F4AF; &#x1F3CA; | Formulario de Alumne </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+¡Bienvenid@ a Nata100! Contesta las siguientes preguntas para completar tu perfil.
+
+<form action="{% url 'formulario_alumne' %}" method="post">
+    {% csrf_token %}
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body ml-3" style="font-size: 18px">
+                    <div class="md-form mb-2">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <label for="nacimiento">Fecha de nacimiento</label>
+                        <input type="date" id="nacimiento" name="nacimiento" class="form-control validate form-textbox">
+                    </div>
+
+                    <div class="md-form mb-2">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <label for="regiones">Región</label>
+                        <select id="regiones" name="regiones"></select>
+                    </div>
+
+                    <div class="md-form mb-2">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <label for="comunas">Comuna</label>
+                        <select id="comunas" name="comunas"></select>
+                    </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn form-btn px-5">Crear cuenta</button>
+                </div>
+            </div>
+        </div>
+</form>
+<script src="{% static 'script-comunas.js' %}"></script>
+</body>
+</html>

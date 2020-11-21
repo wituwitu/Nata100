@@ -62,30 +62,27 @@ def user_register(request):
     """
     The register view
     """
-    if request.method == 'GET':
-        return render(request, 'user/register.html')
-
-    elif request.method == 'POST':
-
-        print(request.POST.keys())
-        attributes = {"username": None, "email": None, "password": None}
-
-        for element in attributes.keys():
-            if element not in request.POST:
-                return HttpResponseRedirect("/register/")
+    if request.method == 'POST':
 
         if request.POST["tipo_usuario"] == "0":
             _ = Alumne.objects.create_user(username=request.POST["username"], email=request.POST["email"],
                                            password=request.POST["password"])
+            return HttpResponseRedirect('/formulario_alumne/')
+
         elif request.POST["tipo_usuario"] == "1":
             _ = Profe.objects.create_user(username=request.POST["username"], email=request.POST["email"],
                                           password=request.POST["password"])
+            return HttpResponseRedirect('/formulario_profe/')
 
-        return HttpResponseRedirect('/formulario/')
 
+def formulario_alumne(request):
+    if request.method == 'POST':
 
-def formulario(request):
-    return render(request, 'frontPage/formulario.html')
+        region = request.POST["regiones"]
+        comuna = request.POST["comunas"]
+
+        return HttpResponseRedirect('/dashboard/')
+
 
 
 def dashboard(request):
