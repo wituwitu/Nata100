@@ -5,8 +5,16 @@
     <title>Nata&#x1F4AF; | Dashboard</title>
 </head>
 <body>
-bola
-<a href="{% url 'logout' %}">Cerrar sesión</a>
-<a href="{% url 'formulario_alumne' %}">Modificar tu información</a>
+Tus datos: <br>
+Nombre: {{ username }}<br>
+E-mail: {{ email }}<br>
+Fecha de nacimiento: {{ nacimiento }}<br>
+Profesor(a) asociado/a: {{ profe }}<br>
+Región: {{ region }}<br>
+Comuna: {{ comuna }}<br>
+Amigues: {{ amigues }}<br>
+{#<a href="{% url 'cronometro' %}">Ingresar marca</a><br>#}
+<a href="{% url 'logout' %}">Cerrar sesión</a><br>
+<a href="{% url 'formulario_alumne' %}">Modificar tu información</a><br>
 </body>
 </html>

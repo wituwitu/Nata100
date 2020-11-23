@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.exceptions import ObjectDoesNotExist
 
 
 def user_directory_path(instance, filename):
@@ -21,14 +22,18 @@ class User(AbstractUser):
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['email']
 
+    def __str__(self):
+        return self.username
+
 
 class Profe(User):
-    pass
+
+    def __str__(self):
+        return self.username
 
 
 class Alumne(User):
     profesor = models.ForeignKey(Profe, on_delete=models.CASCADE, null=True)  # one (profe) to many (alumne)
 
-
-
-
+    def __str__(self):
+        return self.username

@@ -1,6 +1,8 @@
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.http.response import HttpResponse, HttpResponseRedirect
+from django.template import Context
+from .models import User, Alumne, Profe
 
 from .models import User, Alumne, Profe
 
@@ -81,7 +83,11 @@ def user_register(request):
 
 
 def formulario_alumne(request):
-    return render(request, 'frontPage/formulario_alumne.html')
+    profe_list = Profe.objects.all()
+    username = request.user.username
+    c = {'username': username, 'profe_list': profe_list}
+    return render(request, 'frontPage/formulario_alumne.html', context=c)
+
 
 def formulario_profe(request):
     return render(request, 'frontPage/formulario_profe.html')
@@ -91,25 +97,34 @@ def formulario_alumne_post(request):
     user = request.user
     if user.is_authenticated:
         if request.method == 'POST':
+            nacimiento = request.POST["nacimiento"]
             region = request.POST["regiones"]
             comuna = request.POST["comunas"]
+            profe = request.POST["profe"]
+            user.nacimiento = nacimiento
             user.region = region
             user.comuna = comuna
+            user.profesor = profe
             user.save()
-    return HttpResponseRedirect('/dashboard/')
+    return dashboard(request)
 
 
 def formulario_profe_post(request):
     user = request.user
     if user.is_authenticated:
         if request.method == 'POST':
+            nacimiento = request.POST["nacimiento"]
             region = request.POST["regiones"]
             comuna = request.POST["comunas"]
+            user.nacimiento = nacimiento
             user.region = region
             user.comuna = comuna
             user.save()
-    return HttpResponseRedirect('/dashboard/')
+    return dashboard(request)
 
 
 def dashboard(request):
-    return render(request, "frontPage/dashboard.html")
+    user = request.user
+    c = {'username': user.username, 'email': user.email, 'nacimiento': user.nacimiento, 'profe': user.profesor,
+         'region': user.region, 'comuna': user.comuna, 'amigues': user.amigues}
+    return render(request, "frontPage/dashboard.html", context=c)
