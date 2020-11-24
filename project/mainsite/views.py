@@ -74,12 +74,14 @@ def user_register(request):
                                            password=password)
             user = authenticate(username=username, password=password)
             login(request, user)
-            return render(request, 'frontPage/formulario_alumne.html')
+            return formulario_alumne(request)
 
         elif request.POST["tipo_usuario"] == "1":
             _ = Profe.objects.create_user(username=username, email=email,
                                           password=password)
-            return render(request, 'frontPage/formulario_profe.html')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return formulario_profe(request)
 
 
 def formulario_alumne(request):

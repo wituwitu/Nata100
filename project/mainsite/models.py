@@ -37,3 +37,16 @@ class Alumne(User):
 
     def __str__(self):
         return self.username
+
+
+class AbstractRanking(models.Model):
+    categoria = models.CharField(max_length=32, unique=True, primary_key=True)
+    tiempo = models.DateTimeField()
+
+
+class RankingRegional(AbstractRanking):
+    region = models.CharField(max_length=32, unique=True, primary_key=True)
+
+
+class RankingComunal(AbstractRanking):
+    comuna = models.CharField(max_length=32, unique=True, primary_key=True)
