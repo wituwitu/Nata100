@@ -43,10 +43,27 @@ class AbstractRanking(models.Model):
     categoria = models.CharField(max_length=32, unique=True, primary_key=True)
     tiempo = models.DateTimeField()
 
-
 class RankingRegional(AbstractRanking):
+    tipo='regional'
     region = models.CharField(max_length=32, unique=True, primary_key=True)
 
+    def __str__(self):
+        return self.tipo
 
 class RankingComunal(AbstractRanking):
-    comuna = models.CharField(max_length=32, unique=True, primary_key=True)
+     tipo='comunal'
+     comuna = models.CharField(max_length=32, unique=True, primary_key=True)
+     def __str__(self):
+         return self.tipo
+
+class RankingNacional(AbstractRanking):
+     tipo='nacional'
+
+     def __str__(self):
+         return self.tipo
+
+#- Crear los modelos para usuarios (listo), marcas, ranking, amigos y comentarios
+#- Crear cronómetro (o ingreso de datos manual), que guarde el tiempo asociado al alumne, estilo de nado y otros datos importantes
+#- Escoger si los datos se subirán a algún ranking o no
+#- Recoger datos hacia los ránkings (tabla de mejores posiciones)
+print('PyCharm')

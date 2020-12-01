@@ -13,4 +13,8 @@ urlpatterns = [
     path('formulario_profe/', views.formulario_profe, name="formulario_profe"),
     path('formulario_profe_post/', views.formulario_profe_post, name="formulario_profe_post"),
     path('dashboard/', views.dashboard, name="dashboard"),
+    path( 'ranking_comunal_post/', views.Ranking_Comunal, name="ranking_comunal_post" ),
+    path( 'ranking_regional_post/', views.Ranking_Regional, name="ranking_regional_post" ),
+    path( 'ranking_nacional_post/', views.Ranking_Nacional, name="ranking_nacional_post" ),
 ]
+

@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nata&#x1F4AF; | Ranking Regional </title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+¡Bienvenid@ a Nata100, {{ username }}! Ingresa tu tiempo.
+
+<form action="{% url 'ranking_regional_post' %}" method="post">
+    {% csrf_token %}
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body ml-3" style="font-size: 18px">
+                    <div class="md-form mb-2">
+                        <i class="fas fa-user prefix grey-text"></i>
+                        <label for="tiempo">Tiempo</label>
+                        <input type="time" id="tiempo" name="tiempo" class="form-control validate form-textbox">
+                    </div>
+
+                    <div class="md-form mb-2">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <label for="region">Region</label>
+                        <select id="region" name="Region"></select>
+                    </div>
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn form-btn px-5">Continuar</button>
+                </div>
+            </div>
+        </div>
+</form>
+</body>
+</html>

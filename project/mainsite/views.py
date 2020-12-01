@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.template import Context
-from .models import User, Alumne, Profe
+from .models import User, Alumne, Profe, RankingNacional, RankingRegional, RankingComunal
 
 from .models import User, Alumne, Profe
 
@@ -130,3 +130,33 @@ def dashboard(request):
     c = {'username': user.username, 'email': user.email, 'nacimiento': user.nacimiento, 'profe': user.profesor,
          'region': user.region, 'comuna': user.comuna, 'amigues': user.amigues}
     return render(request, "frontPage/dashboard.html", context=c)
+
+def Ranking_Comunal(request):
+    tipo=RankingComunal.objects.all()
+    if request.method=='POST':
+        tiempo = request.POST["tiempo"]
+        usuario = request.user
+        tipo.tiempo=tiempo
+        tipo.usuario=usuario
+        tipo.save()
+    return dashboard(request)
+
+def Ranking_Regional(request):
+    tipo=RankingRegional.objects.all()
+    if request.method=='POST':
+        tiempo = request.POST["tiempo"]
+        usuario = request.user
+        tipo.tiempo=tiempo
+        tipo.usuario=usuario
+        tipo.save()
+    return dashboard(request)
+
+def Ranking_Nacional(request):
+    tipo=RankingNacional.objects.all()
+    if request.method=='POST':
+        tiempo = request.POST["tiempo"]
+        usuario = request.user
+        tipo.tiempo=tiempo
+        tipo.usuario=usuario
+        tipo.save()
+    return dashboard(request)
