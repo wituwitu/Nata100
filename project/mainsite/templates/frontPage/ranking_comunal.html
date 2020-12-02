@@ -3,35 +3,22 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Nata&#x1F4AF; | Ranking Comunal </title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>Nata&#x1F4AF; | Ranking comunal en {{ comuna }} </title>
 </head>
 <body>
 
-¡Bienvenid@ a Nata100, {{ username }}! Ingresa tu tiempo.
+A continuación puedes ver las 10 mejores marcas de {{ comuna }}.
 
-<form action="{% url 'ranking_comunal_post' %}" method="post">
-    {% csrf_token %}
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body ml-3" style="font-size: 18px">
-                    <div class="md-form mb-2">
-                        <i class="fas fa-user prefix grey-text"></i>
-                        <label for="tiempo">Tiempo</label>
-                        <input type="time" id="tiempo" name="tiempo" class="form-control validate form-textbox">
-                    </div>
+{% if top_10 %}
+    <ul>
+        {% for marca in top_10 %}
+            <li>{{ marca.to_str }}</li>
+        {%  endfor %}
+    </ul>
 
-                    <div class="md-form mb-2">
-                        <i class="fas fa-envelope prefix grey-text"></i>
-                        <label for="comunas">Comuna</label>
-                        <select id="comunas" name="comunas"></select>
-                    </div>
-                </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="submit" class="btn form-btn px-5">Continuar</button>
-                </div>
-            </div>
-        </div>
-</form>
+{% else %}
+    <p>No se han registrado marcas en {{ comuna }}.</p>
+{% endif %}
+
 </body>
 </html>

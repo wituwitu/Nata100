@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nata&#x1F4AF; | Agrega tu marca</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+A continuación podrás agregar tu marca, seleccionando el ránking al cual quieres publicarla.
+
+<form action="{% url 'marca_post' %}" method="post">
+    {% csrf_token %}
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body ml-3" style="font-size: 18px">
+
+                <div class="md-form mb-2">
+                    Estilo de nado <br>
+                    <input type="radio" id="crol" name="estilo" value="crol">
+                    <label for="crol">Crol</label><br>
+                    <input type="radio" id="mariposa" name="estilo" value="mariposa">
+                    <label for="mariposa">Mariposa</label><br>
+                    <input type="radio" id="espalda" name="estilo" value="espalda">
+                    <label for="espalda">Espalda</label><br>
+                    <input type="radio" id="pecho" name="estilo" value="pecho">
+                    <label for="pecho">Pecho</label>
+                </div>
+
+                <div class="md-form mb-2">
+                    <label for="tiempo">Tiempo</label>
+                    <input type="time" id="tiempo" name="tiempo">
+                </div>
+
+                <div class="md-form mb-2">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <label for="regiones">Región donde fue tomada la marca</label>
+                    <select id="regiones" name="regiones"></select>
+                </div>
+
+                <div class="md-form mb-2">
+                    <i class="fas fa-envelope prefix grey-text"></i>
+                    <label for="comunas">Comuna donde fue tomada la marca</label>
+                    <select id="comunas" name="comunas"></select>
+                </div>
+
+                <div class="md-form mb-2">
+                    Ránking al cual publicar tu marca <br>
+                    <input type="radio" id="comunal" name="tipo" value="comunal">
+                    <label for="comunal">Comunal</label><br>
+                    <input type="radio" id="regional" name="tipo" value="regional">
+                    <label for="regional">Regional</label><br>
+                    <input type="radio" id="nacional" name="tipo" value="nacional">
+                    <label for="nacional">Nacional</label><br>
+                    <input type="radio" id="ninguno" name="tipo" value="ninguno">
+                    <label for="ninguno">Ninguno</label><br>
+                </div>
+
+            </div>
+            <div class="modal-footer d-flex justify-content-center">
+                <button type="submit" class="btn form-btn px-5">Continuar</button>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="{% static 'script-comunas.js' %}"></script>
+</body>
+</html>

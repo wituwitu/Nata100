@@ -1,7 +1,9 @@
 from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render
-from django.http.response import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from django.http.response import HttpResponse, HttpResponseRedirect, Http404
 from django.template import Context
+from django.views import generic
+
 from .models import User, Alumne, Profe, RankingNacional, RankingRegional, RankingComunal, Marca
 
 from .models import User, Alumne, Profe
@@ -13,7 +15,7 @@ def frontPage(request):
     """
     if request.method == 'GET':
         if request.user.is_authenticated:
-            return render(request, "frontPage/dashboard.html")
+            return dashboard(request)
         else:
             return render(request, 'frontPage/index.html')
 
@@ -46,7 +48,7 @@ def user_login(request):
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
-            return HttpResponseRedirect('/dashboard/')
+            return dashboard(request)
         else:
             return HttpResponseRedirect('/login/')
 
@@ -127,52 +129,111 @@ def formulario_profe_post(request):
 
 def dashboard(request):
     user = request.user
-    c = {'username': user.username, 'email': user.email, 'nacimiento': user.nacimiento, 'profe': user.profesor,
-         'region': user.region, 'comuna': user.comuna, 'amigues': user.amigues}
+    persona = Alumne.objects.filter(username=user.username)
+    if persona.exists():
+        persona = persona[0]
+        c = {'username': persona.username, 'email': persona.email, 'nacimiento': persona.nacimiento, 'profe': persona.profesor,
+             'region': persona.region, 'comuna': persona.comuna, 'amigues': persona.amigues}
+    else:
+        persona = Profe.objects.filter(username=user.username)
+        if persona.exists():
+            persona = persona[0]
+            c = {'username': persona.username, 'email': persona.email, 'nacimiento': persona.nacimiento,
+                 'region': persona.region, 'comuna': persona.comuna}
+        else:
+            raise Http404("Le usuarie no existe.")
     return render(request, "frontPage/dashboard.html", context=c)
+
+
+def marca(request):
+    return render(request, "frontPage/marca.html")
 
 
 def marca_post(request):
     if request.method == 'POST':
         tipo = request.POST["tipo"]
         user = request.user
-        categoria = request.POST["categoria"]
+        estilo = request.POST["estilo"]
         tiempo = request.POST["tiempo"]
+        comuna = request.POST["comunas"]
+        region = request.POST["regiones"]
 
-        marca = Marca(user=user, categoria=categoria, tiempo=tiempo)
-        marca.save()
+        m = Marca.objects.create(user=user, estilo=estilo, tiempo=tiempo, comuna=comuna, region=region)
 
         if tipo == "comunal":
-            comuna = request.POST["comuna"]
-            Ranking_Comunal(comuna, marca)
+            Ranking_Comunal(comuna, m)
         elif tipo == "regional":
-            region = request.POST["region"]
-            Ranking_Regional(region, marca)
+            Ranking_Regional(region, m)
         elif tipo == "nacional":
-            Ranking_Nacional(marca)
+            Ranking_Nacional(m)
+        elif tipo == "ninguno":
+            pass
 
     return dashboard(request)
 
 
-def Ranking_Comunal(comuna, marca):
-    ranking = RankingComunal.objects.filter(comuna=comuna)
-    if not ranking.exists():
-        ranking = RankingComunal(comuna=comuna)
-    ranking.marcas.add(marca)
+def Ranking_Comunal(comuna, m):
+    rankings = RankingComunal.objects.filter(comuna=comuna)
+    if not rankings.exists():
+        ranking = RankingComunal.objects.create(comuna=comuna)
+    else:
+        ranking = rankings[0]
+    ranking.marcas.add(m)
     ranking.save()
 
 
-def Ranking_Regional(region, marca):
-    ranking = RankingRegional.objects.filter(region=region)
-    if not ranking.exists():
-        ranking = RankingRegional(region=region)
-    ranking.marcas.add(marca)
+def Ranking_Regional(region, m):
+    rankings = RankingRegional.objects.filter(region=region)
+    if not rankings.exists():
+        ranking = RankingRegional.objects.create(region=region)
+    else:
+        ranking = rankings[0]
+    ranking.marcas.add(m)
     ranking.save()
 
 
-def Ranking_Nacional(marca):
-    ranking = RankingNacional.objects.filter(pais="chile")
-    if not ranking.exists():
-        ranking = RankingNacional()
-    ranking.marcas.add(marca)
+def Ranking_Nacional(m):
+    rankings = RankingNacional.objects.filter(pais="chile")
+    if not rankings.exists():
+        ranking = RankingRegional.objects.create()
+    else:
+        ranking = rankings[0]
+    ranking.marcas.add(m)
     ranking.save()
+
+
+def ranking_select(request):
+    if request.method == "POST":
+        print(request.POST.keys())
+        tipo = request.POST["tipo"]
+        print(tipo)
+        if tipo == "comunal":
+            return ranking_comunal_index(request, request.POST["comunas"])
+        elif tipo == "regional":
+            return ranking_regional_index(request, request.POST["regiones"])
+        elif tipo == "nacional":
+            return ranking_nacional_index(request)
+
+
+def ranking_comunal_index(request, comuna):
+    ranking = get_object_or_404(RankingComunal, pk=comuna)
+    top_10 = ranking.marcas.all().order_by("tiempo")[:10]
+    context = {"comuna": comuna, "top_10": top_10}
+
+    return render(request, "frontPage/ranking_comunal.html", context)
+
+
+def ranking_regional_index(request, region):
+    ranking = get_object_or_404(RankingRegional, pk=region)
+    top_10 = ranking.marcas.all().order_by("tiempo")[:10]
+    context = {"region": region, "top_10": top_10}
+
+    return render(request, "frontPage/ranking_regional.html", context)
+
+
+def ranking_nacional_index(request):
+    ranking = get_object_or_404(RankingNacional, pk="chile")
+    top_10 = ranking.marcas.all().order_by("tiempo")[:10]
+    context = {"pais": "Chile", "top_10": top_10}
+
+    return render(request, "frontPage/ranking_nacional.html", context)

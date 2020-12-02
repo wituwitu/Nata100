@@ -13,6 +13,11 @@ urlpatterns = [
     path('formulario_profe/', views.formulario_profe, name="formulario_profe"),
     path('formulario_profe_post/', views.formulario_profe_post, name="formulario_profe_post"),
     path('dashboard/', views.dashboard, name="dashboard"),
+    path('marca/', views.marca, name="marca"),
     path('marca_post/', views.marca_post, name="marca_post"),
+    path('ranking_select/', views.ranking_select, name="ranking_select"),
+    path('ranking_comunal/', views.ranking_comunal_index, name="ranking_comunal"),
+    path('ranking_regional/', views.ranking_regional_index, name="ranking_regional"),
+    path('ranking_nacional/', views.ranking_nacional_index, name="ranking_nacional"),
 ]
 

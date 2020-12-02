@@ -40,9 +40,14 @@ class Alumne(User):
 
 
 class Marca(models.Model):
-    categoria = models.CharField(max_length=32, unique=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    estilo = models.CharField(max_length=32, null=True)
     tiempo = models.TimeField(blank=True, null=True)
-    user = models.ForeignKey(Alumne, on_delete=models.CASCADE, null=True)
+    comuna = models.CharField(max_length=32, null=True)
+    region = models.CharField(max_length=32, null=True)
+
+    def to_str(self):
+        return f"{self.user.username}: {self.tiempo} ({self.estilo})"
 
     class Meta:
         ordering = ['tiempo']
@@ -53,27 +58,15 @@ class AbstractRanking(models.Model):
 
 
 class RankingComunal(AbstractRanking):
-    tipo = 'comunal'
     comuna = models.CharField(max_length=32, unique=True, primary_key=True)
-
-    def __str__(self):
-        return self.tipo
 
 
 class RankingRegional(AbstractRanking):
-    tipo = 'regional'
     region = models.CharField(max_length=32, unique=True, primary_key=True)
-
-    def __str__(self):
-        return self.tipo
 
 
 class RankingNacional(AbstractRanking):
-    tipo = 'nacional'
-    pais = "chile"
-
-    def __str__(self):
-        return self.tipo
+    pais = "Chile"
 
 
 # - Crear los modelos para usuarios (listo), marcas, ranking, amigos y comentarios
