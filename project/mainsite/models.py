@@ -42,7 +42,7 @@ class Alumne(User):
 class Marca(models.Model):
     categoria = models.CharField(max_length=32, unique=True)
     tiempo = models.TimeField(blank=True, null=True)
-    usuarie = models.ForeignKey(Alumne, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(Alumne, on_delete=models.CASCADE, null=True)
 
     class Meta:
         ordering = ['tiempo']
@@ -50,14 +50,6 @@ class Marca(models.Model):
 
 class AbstractRanking(models.Model):
     marcas = models.ManyToManyField(Marca)  # many (marcas) to many (rankings)
-
-
-class RankingRegional(AbstractRanking):
-    tipo = 'regional'
-    region = models.CharField(max_length=32, unique=True, primary_key=True)
-
-    def __str__(self):
-        return self.tipo
 
 
 class RankingComunal(AbstractRanking):
@@ -68,8 +60,17 @@ class RankingComunal(AbstractRanking):
         return self.tipo
 
 
+class RankingRegional(AbstractRanking):
+    tipo = 'regional'
+    region = models.CharField(max_length=32, unique=True, primary_key=True)
+
+    def __str__(self):
+        return self.tipo
+
+
 class RankingNacional(AbstractRanking):
     tipo = 'nacional'
+    pais = "chile"
 
     def __str__(self):
         return self.tipo

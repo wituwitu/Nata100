@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render
 from django.http.response import HttpResponse, HttpResponseRedirect
 from django.template import Context
-from .models import User, Alumne, Profe, RankingNacional, RankingRegional, RankingComunal
+from .models import User, Alumne, Profe, RankingNacional, RankingRegional, RankingComunal, Marca
 
 from .models import User, Alumne, Profe
 
@@ -131,32 +131,48 @@ def dashboard(request):
          'region': user.region, 'comuna': user.comuna, 'amigues': user.amigues}
     return render(request, "frontPage/dashboard.html", context=c)
 
-def Ranking_Comunal(request):
-    tipo=RankingComunal.objects.all()
-    if request.method=='POST':
+
+def marca_post(request):
+    if request.method == 'POST':
+        tipo = request.POST["tipo"]
+        user = request.user
+        categoria = request.POST["categoria"]
         tiempo = request.POST["tiempo"]
-        usuario = request.user
-        tipo.tiempo=tiempo
-        tipo.usuario=usuario
-        tipo.save()
+
+        marca = Marca(user=user, categoria=categoria, tiempo=tiempo)
+        marca.save()
+
+        if tipo == "comunal":
+            comuna = request.POST["comuna"]
+            Ranking_Comunal(comuna, marca)
+        elif tipo == "regional":
+            region = request.POST["region"]
+            Ranking_Regional(region, marca)
+        elif tipo == "nacional":
+            Ranking_Nacional(marca)
+
     return dashboard(request)
 
-def Ranking_Regional(request):
-    tipo=RankingRegional.objects.all()
-    if request.method=='POST':
-        tiempo = request.POST["tiempo"]
-        usuario = request.user
-        tipo.tiempo=tiempo
-        tipo.usuario=usuario
-        tipo.save()
-    return dashboard(request)
 
-def Ranking_Nacional(request):
-    tipo=RankingNacional.objects.all()
-    if request.method=='POST':
-        tiempo = request.POST["tiempo"]
-        usuario = request.user
-        tipo.tiempo=tiempo
-        tipo.usuario=usuario
-        tipo.save()
-    return dashboard(request)
+def Ranking_Comunal(comuna, marca):
+    ranking = RankingComunal.objects.filter(comuna=comuna)
+    if not ranking.exists():
+        ranking = RankingComunal(comuna=comuna)
+    ranking.marcas.add(marca)
+    ranking.save()
+
+
+def Ranking_Regional(region, marca):
+    ranking = RankingRegional.objects.filter(region=region)
+    if not ranking.exists():
+        ranking = RankingRegional(region=region)
+    ranking.marcas.add(marca)
+    ranking.save()
+
+
+def Ranking_Nacional(marca):
+    ranking = RankingNacional.objects.filter(pais="chile")
+    if not ranking.exists():
+        ranking = RankingNacional()
+    ranking.marcas.add(marca)
+    ranking.save()
