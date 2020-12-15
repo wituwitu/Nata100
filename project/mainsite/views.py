@@ -4,9 +4,11 @@ from django.http.response import HttpResponse, HttpResponseRedirect, Http404
 from django.template import Context
 from django.views import generic
 
-from .models import User, Alumne, Profe, RankingNacional, RankingRegional, RankingComunal, Marca
+from .models import User, Alumne, Profe, RankingNacional, RankingRegional, RankingComunal, Marca, RankingAmigues
 
 from .models import User, Alumne, Profe
+
+from friendship.models import Friend, Follow, Block, FriendshipRequest
 
 
 def frontPage(request):
@@ -132,17 +134,23 @@ def dashboard(request):
     persona = Alumne.objects.filter(username=user.username)
     if persona.exists():
         persona = persona[0]
-        c = {'username': persona.username, 'email': persona.email, 'nacimiento': persona.nacimiento, 'profe': persona.profesor,
-             'region': persona.region, 'comuna': persona.comuna, 'amigues': persona.amigues}
+        c = {'username': persona.username,
+             'email': persona.email,
+             'nacimiento': persona.nacimiento,
+             'profe': persona.profesor,
+             'region': persona.region,
+             'comuna': persona.comuna,
+             'solicitudes': Friend.objects.unrejected_requests(user=request.user)}
+        return render(request, "frontPage/dashboard_alumne.html", context=c)
     else:
         persona = Profe.objects.filter(username=user.username)
         if persona.exists():
             persona = persona[0]
             c = {'username': persona.username, 'email': persona.email, 'nacimiento': persona.nacimiento,
                  'region': persona.region, 'comuna': persona.comuna}
+            return render(request, "frontPage/dashboard_profe.html", context=c)
         else:
             raise Http404("Le usuarie no existe.")
-    return render(request, "frontPage/dashboard.html", context=c)
 
 
 def marca(request):
@@ -158,21 +166,24 @@ def marca_post(request):
         comuna = request.POST["comunas"]
         region = request.POST["regiones"]
 
-        m = Marca.objects.create(user=user, estilo=estilo, tiempo=tiempo, comuna=comuna, region=region)
+        m = Marca.objects.create(user=user, estilo=estilo, tiempo=tiempo, comuna=comuna, region=region, publico=True)
 
         if tipo == "comunal":
-            Ranking_Comunal(comuna, m)
+            ranking_comunal(comuna, m)
         elif tipo == "regional":
-            Ranking_Regional(region, m)
+            ranking_comunal(region, m)
         elif tipo == "nacional":
-            Ranking_Nacional(m)
-        elif tipo == "ninguno":
+            ranking_nacional(m)
+        elif tipo == "amigues":
             pass
+        elif tipo == "ninguno":
+            m.publico = False
+            m.save()
 
     return dashboard(request)
 
 
-def Ranking_Comunal(comuna, m):
+def ranking_comunal(comuna, m):
     rankings = RankingComunal.objects.filter(comuna=comuna)
     if not rankings.exists():
         ranking = RankingComunal.objects.create(comuna=comuna)
@@ -182,7 +193,7 @@ def Ranking_Comunal(comuna, m):
     ranking.save()
 
 
-def Ranking_Regional(region, m):
+def ranking_regional(region, m):
     rankings = RankingRegional.objects.filter(region=region)
     if not rankings.exists():
         ranking = RankingRegional.objects.create(region=region)
@@ -192,7 +203,7 @@ def Ranking_Regional(region, m):
     ranking.save()
 
 
-def Ranking_Nacional(m):
+def ranking_nacional(m):
     rankings = RankingNacional.objects.filter(pais="chile")
     if not rankings.exists():
         ranking = RankingRegional.objects.create()
@@ -213,6 +224,8 @@ def ranking_select(request):
             return ranking_regional_index(request, request.POST["regiones"])
         elif tipo == "nacional":
             return ranking_nacional_index(request)
+        elif tipo == "amigues":
+            return ranking_amigues_index(request)
 
 
 def ranking_comunal_index(request, comuna):
@@ -237,3 +250,25 @@ def ranking_nacional_index(request):
     context = {"pais": "Chile", "top_10": top_10}
 
     return render(request, "frontPage/ranking_nacional.html", context)
+
+
+def ranking_amigues_index(request):
+    amigues = Friend.objects.friends(request.user)
+    top_10 = Marca.objects.filter(user__in=amigues).exclude(publico=False).order_by("tiempo")[:10]
+    context = {"top_10": top_10}
+    return render(request, "frontPage/ranking_amigues.html", context)
+
+
+def agregar_amigue(request):
+    if request.method == "POST":
+        amigue = User.objects.get(pk=request.POST["amigue"])
+        Friend.objects.add_friend(request.user, amigue, message="Seamos amigues en Nata100!")
+    return dashboard(request)
+
+
+def aceptar_amigue(request):
+    if request.method == "POST":
+        solicitud = FriendshipRequest.objects.get(to_user=request.user,
+                                                  from_user=User.objects.get(pk=request.POST["amigue"]))
+        solicitud.accept()
+    return dashboard(request)

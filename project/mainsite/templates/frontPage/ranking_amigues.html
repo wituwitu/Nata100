@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nata&#x1F4AF; | Ranking de tus amigues </title>
+</head>
+<body>
+
+A continuación puedes ver las 10 mejores marcas públicas de tus amigues.
+
+{% if top_10 %}
+    <ul>
+        {% for marca in top_10 %}
+            <li>{{ marca.to_str }}</li>
+        {%  endfor %}
+    </ul>
+
+{% else %}
+    <p>Tus amigues no han registrado marcas aún.</p>
+{% endif %}
+
+</body>
+</html>

@@ -16,7 +16,6 @@ class User(AbstractUser):
     nacimiento = models.DateField(null=True)
     region = models.CharField(max_length=32, default="")
     comuna = models.CharField(max_length=32, default="")
-    amigues = models.ManyToManyField("self", blank=True)  # many (user) to many (user)
     # Setting up some variables
     USERNAME_FIELD = 'username'
     EMAIL_FIELD = 'email'
@@ -45,6 +44,7 @@ class Marca(models.Model):
     tiempo = models.TimeField(blank=True, null=True)
     comuna = models.CharField(max_length=32, null=True)
     region = models.CharField(max_length=32, null=True)
+    publico = models.BooleanField(null=True)
 
     def to_str(self):
         return f"{self.user.username}: {self.tiempo} ({self.estilo})"
@@ -69,8 +69,8 @@ class RankingNacional(AbstractRanking):
     pais = "Chile"
 
 
+class RankingAmigues(AbstractRanking):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+
+
 # - Crear los modelos para usuarios (listo), marcas, ranking, amigos y comentarios
-# - Crear cronómetro (o ingreso de datos manual), que guarde el tiempo asociado al alumne, estilo de nado y otros datos importantes
-# - Escoger si los datos se subirán a algún ranking o no
-# - Recoger datos hacia los ránkings (tabla de mejores posiciones)
-print('PyCharm')

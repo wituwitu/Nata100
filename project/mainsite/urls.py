@@ -1,4 +1,5 @@
-from django.urls import path
+from django.conf.urls import url
+from django.urls import path, include
 
 from . import views
 
@@ -19,5 +20,8 @@ urlpatterns = [
     path('ranking_comunal/', views.ranking_comunal_index, name="ranking_comunal"),
     path('ranking_regional/', views.ranking_regional_index, name="ranking_regional"),
     path('ranking_nacional/', views.ranking_nacional_index, name="ranking_nacional"),
+    path('agregar_amigue/', views.agregar_amigue, name="agregar_amigue"),
+    path('aceptar_amigue/', views.aceptar_amigue, name="aceptar_amigue"),
+    url(r'^friendship/', include('friendship.urls'))
 ]
 

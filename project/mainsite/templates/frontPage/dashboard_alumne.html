@@ -1,4 +1,5 @@
 {% load static %}
+{% load friendshiptags %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,8 +15,34 @@ Fecha de nacimiento: {{ nacimiento }}<br>
 Profesor(a) asociado/a: {{ profe }}<br>
 Región: {{ region }}<br>
 Comuna: {{ comuna }}<br>
-Amigues: {{ amigues }}<br>
-{#<a href="{% url 'cronometro' %}">Ingresar marca</a><br>#}
+Amigues: {% friends request.user %}<br>
+Tienes {% friend_request_count request.user %} solicitud(es) de amistad pendientes: <br>
+
+{% if solicitudes %}
+    <form action="{% url 'aceptar_amigue' %}" method="post">
+        {% csrf_token %}
+        {% for solicitud in solicitudes %}
+            <input type="radio" id="{{ solicitud.from_user }}" name="amigue" value="{{ solicitud.from_user }}">
+            <label for="{{ solicitud.from_user }}">{{ solicitud.from_user }}</label><br>
+        {%  endfor %}
+        <button type="submit">Aceptar solicitud(es)</button>
+    </form>
+{% else %}
+    <p>No tienes solicitudes.</p>
+{% endif %}
+
+<br>
+
+Agrega a une amigue:
+<form action="{% url 'agregar_amigue' %}" method="post">
+    {% csrf_token %}
+    <label for="amigue">Nombre completo</label><br>
+    <input type="text" id="amigue" name="amigue"><br>
+    <button type="submit">Enviar solicitud</button>
+</form>
+
+<br>
+
 <a href="{% url 'marca' %}">Ingresa una marca</a><br>
 <br>
 Revisa un ránking:
@@ -32,6 +59,8 @@ Revisa un ránking:
                     <label for="regional">Regional</label><br>
                     <input type="radio" id="nacional" name="tipo" value="nacional">
                     <label for="nacional">Nacional</label><br>
+                    <input type="radio" id="amigues" name="tipo" value="amigues">
+                    <label for="amigues">Amigues</label><br>
                 </div>
 
                 <div class="md-form mb-2">
@@ -49,7 +78,7 @@ Revisa un ránking:
             </div>
 
             <div class="modal-footer d-flex justify-content-center">
-                <button type="submit" class="btn form-btn px-5">Continuar</button>
+                <button type="submit" class="btn form-btn px-5">Consultar</button>
             </div>
         </div>
     </div>
