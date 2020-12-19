@@ -34,25 +34,16 @@ def user_login(request):
     """
     The login view
     """
-    if request.method == 'GET':
-        if request.user.is_authenticated:
-            return HttpResponseRedirect('/dashboard/')
-        else:
-            return render(request, 'user/login.html')
-
-    elif request.method == "POST":
-        if "username" in request.POST.keys():
-            username = request.POST["username"]
-            password = request.POST['password']
-        else:
-            pass
+    if request.method == "POST":
+        username = request.POST["username"]
+        password = request.POST['password']
 
         user = authenticate(username=username, password=password)
         if user is not None:
             login(request, user)
             return dashboard(request)
         else:
-            return HttpResponseRedirect('/login/')
+            return HttpResponseRedirect('/')
 
 
 def user_logout(request):
@@ -110,7 +101,7 @@ def formulario_alumne_post(request):
             user.nacimiento = nacimiento
             user.region = region
             user.comuna = comuna
-            user.profesor = profe
+            user.profesor = Profe.objects.get(pk=profe)
             user.save()
     return dashboard(request)
 
@@ -162,16 +153,23 @@ def marca_post(request):
         tipo = request.POST["tipo"]
         user = request.user
         estilo = request.POST["estilo"]
+        distancia = request.POST["distancia"]
         tiempo = request.POST["tiempo"]
         comuna = request.POST["comunas"]
         region = request.POST["regiones"]
 
-        m = Marca.objects.create(user=user, estilo=estilo, tiempo=tiempo, comuna=comuna, region=region, publico=True)
+        m = Marca.objects.create(user=user,
+                                 estilo=estilo,
+                                 distancia=distancia,
+                                 tiempo=tiempo,
+                                 comuna=comuna,
+                                 region=region,
+                                 publico=True)
 
         if tipo == "comunal":
-            ranking_comunal(comuna, m)
+            ranking_comunal(m)
         elif tipo == "regional":
-            ranking_comunal(region, m)
+            ranking_comunal(m)
         elif tipo == "nacional":
             ranking_nacional(m)
         elif tipo == "amigues":
@@ -183,7 +181,8 @@ def marca_post(request):
     return dashboard(request)
 
 
-def ranking_comunal(comuna, m):
+def ranking_comunal(m):
+    comuna = m.comuna
     rankings = RankingComunal.objects.filter(comuna=comuna)
     if not rankings.exists():
         ranking = RankingComunal.objects.create(comuna=comuna)
@@ -193,7 +192,8 @@ def ranking_comunal(comuna, m):
     ranking.save()
 
 
-def ranking_regional(region, m):
+def ranking_regional(m):
+    region = m.region
     rankings = RankingRegional.objects.filter(region=region)
     if not rankings.exists():
         ranking = RankingRegional.objects.create(region=region)
@@ -204,9 +204,9 @@ def ranking_regional(region, m):
 
 
 def ranking_nacional(m):
-    rankings = RankingNacional.objects.filter(pais="chile")
+    rankings = RankingNacional.objects.all()
     if not rankings.exists():
-        ranking = RankingRegional.objects.create()
+        ranking = RankingNacional.objects.create()
     else:
         ranking = rankings[0]
     ranking.marcas.add(m)
@@ -215,9 +215,7 @@ def ranking_nacional(m):
 
 def ranking_select(request):
     if request.method == "POST":
-        print(request.POST.keys())
         tipo = request.POST["tipo"]
-        print(tipo)
         if tipo == "comunal":
             return ranking_comunal_index(request, request.POST["comunas"])
         elif tipo == "regional":
@@ -229,7 +227,7 @@ def ranking_select(request):
 
 
 def ranking_comunal_index(request, comuna):
-    ranking = get_object_or_404(RankingComunal, pk=comuna)
+    ranking = get_object_or_404(RankingComunal, comuna=comuna)
     top_10 = ranking.marcas.all().order_by("tiempo")[:10]
     context = {"comuna": comuna, "top_10": top_10}
 
@@ -237,7 +235,7 @@ def ranking_comunal_index(request, comuna):
 
 
 def ranking_regional_index(request, region):
-    ranking = get_object_or_404(RankingRegional, pk=region)
+    ranking = get_object_or_404(RankingRegional, region=region)
     top_10 = ranking.marcas.all().order_by("tiempo")[:10]
     context = {"region": region, "top_10": top_10}
 
@@ -245,7 +243,7 @@ def ranking_regional_index(request, region):
 
 
 def ranking_nacional_index(request):
-    ranking = get_object_or_404(RankingNacional, pk="chile")
+    ranking = get_object_or_404(RankingNacional)
     top_10 = ranking.marcas.all().order_by("tiempo")[:10]
     context = {"pais": "Chile", "top_10": top_10}
 
@@ -262,7 +260,9 @@ def ranking_amigues_index(request):
 def agregar_amigue(request):
     if request.method == "POST":
         amigue = User.objects.get(pk=request.POST["amigue"])
-        Friend.objects.add_friend(request.user, amigue, message="Seamos amigues en Nata100!")
+        Friend.objects.add_friend(from_user=request.user,
+                                  to_user=amigue,
+                                  message="Seamos amigues en Nata100!")
     return dashboard(request)
 
 

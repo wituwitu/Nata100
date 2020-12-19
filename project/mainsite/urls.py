@@ -24,4 +24,3 @@ urlpatterns = [
     path('aceptar_amigue/', views.aceptar_amigue, name="aceptar_amigue"),
     url(r'^friendship/', include('friendship.urls'))
 ]
-

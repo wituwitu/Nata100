@@ -41,13 +41,14 @@ class Alumne(User):
 class Marca(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     estilo = models.CharField(max_length=32, null=True)
+    distancia = models.IntegerField(null=True)
     tiempo = models.TimeField(blank=True, null=True)
     comuna = models.CharField(max_length=32, null=True)
     region = models.CharField(max_length=32, null=True)
     publico = models.BooleanField(null=True)
 
     def to_str(self):
-        return f"{self.user.username}: {self.tiempo} ({self.estilo})"
+        return f"{self.user.username}: {self.distancia} metros en {self.tiempo} ({self.estilo})"
 
     class Meta:
         ordering = ['tiempo']
@@ -66,7 +67,7 @@ class RankingRegional(AbstractRanking):
 
 
 class RankingNacional(AbstractRanking):
-    pais = "Chile"
+    pais = "chile"
 
 
 class RankingAmigues(AbstractRanking):
