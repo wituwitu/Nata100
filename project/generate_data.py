@@ -4,7 +4,6 @@ import sys
 import django
 
 sys.path.append("/project")
-print(sys.path)
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "project.settings")
 django.setup()
 
@@ -32,7 +31,7 @@ jorge_sandoval.region = "Región Metropolitana de Santiago"
 jorge_sandoval.save()
 dasla_pando.nacimiento = Date(1995, 9, 16)
 dasla_pando.comuna = "Santiago"
-dasla_pando.comuna = "Región Metropolitana de Santiago"
+dasla_pando.region = "Región Metropolitana de Santiago"
 dasla_pando.save()
 
 print("Creando alumnes")
@@ -103,6 +102,7 @@ marca = Marca.objects.create(user=catalina_gamboa,
                              estilo="Crol",
                              distancia=25,
                              tiempo=Time(minute=3, second=10),
+                             fecha=Date.today(),
                              comuna=catalina_gamboa.comuna,
                              region=catalina_gamboa.region,
                              publico=True)
@@ -111,6 +111,7 @@ marca = Marca.objects.create(user=catalina_gamboa,
                              estilo="Mariposa",
                              distancia=25,
                              tiempo=Time(minute=2, second=50),
+                             fecha=Date.today(),
                              comuna=catalina_gamboa.comuna,
                              region=catalina_gamboa.region,
                              publico=True)
@@ -121,6 +122,7 @@ _ = Marca.objects.create(user=barbara_rocco,
                          estilo="Espalda",
                          distancia=50,
                          tiempo=Time(minute=4, second=30),
+                         fecha=Date.today(),
                          comuna=barbara_rocco.comuna,
                          region=barbara_rocco.region,
                          publico=True)
@@ -128,6 +130,7 @@ _ = Marca.objects.create(user=barbara_rocco,
                          estilo="Crol",
                          distancia=50,
                          tiempo=Time(minute=4, second=10),
+                         fecha=Date.today(),
                          comuna=barbara_rocco.comuna,
                          region=barbara_rocco.region,
                          publico=True)
@@ -135,6 +138,7 @@ _ = Marca.objects.create(user=claudia_san_martin,
                          estilo="Pecho",
                          distancia=25,
                          tiempo=Time(minute=3, second=10),
+                         fecha=Date.today(),
                          comuna=claudia_san_martin.comuna,
                          region=claudia_san_martin.region,
                          publico=True)
@@ -142,6 +146,7 @@ marca = Marca.objects.create(user=claudia_san_martin,
                              estilo="Crol",
                              distancia=50,
                              tiempo=Time(minute=4, second=20),
+                             fecha=Date.today(),
                              comuna=claudia_san_martin.comuna,
                              region=claudia_san_martin.region,
                              publico=True)
@@ -152,6 +157,7 @@ marca = Marca.objects.create(user=diego_wistuba,
                              estilo="Mariposa",
                              distancia=50,
                              tiempo=Time(minute=3, second=30),
+                             fecha=Date.today(),
                              comuna=diego_wistuba.comuna,
                              region=diego_wistuba.region,
                              publico=True)
@@ -162,6 +168,7 @@ marca = Marca.objects.create(user=diego_wistuba,
                              estilo="Espalda",
                              distancia=100,
                              tiempo=Time(minute=5, second=20),
+                             fecha=Date.today(),
                              comuna=diego_wistuba.comuna,
                              region=diego_wistuba.region,
                              publico=True)

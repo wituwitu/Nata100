@@ -43,12 +43,13 @@ class Marca(models.Model):
     estilo = models.CharField(max_length=32, null=True)
     distancia = models.IntegerField(null=True)
     tiempo = models.TimeField(blank=True, null=True)
+    fecha = models.DateField(blank=True, null=True)
     comuna = models.CharField(max_length=32, null=True)
     region = models.CharField(max_length=32, null=True)
     publico = models.BooleanField(null=True)
 
     def to_str(self):
-        return f"{self.user.username}: {self.distancia} metros en {self.tiempo} ({self.estilo})"
+        return f"[{self.fecha}] {self.user.username}: {self.distancia} metros en {self.tiempo} ({self.estilo})"
 
     class Meta:
         ordering = ['tiempo']

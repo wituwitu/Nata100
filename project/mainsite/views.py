@@ -137,8 +137,12 @@ def dashboard(request):
         persona = Profe.objects.filter(username=user.username)
         if persona.exists():
             persona = persona[0]
-            c = {'username': persona.username, 'email': persona.email, 'nacimiento': persona.nacimiento,
-                 'region': persona.region, 'comuna': persona.comuna}
+            c = {'username': persona.username,
+                 'email': persona.email,
+                 'nacimiento': persona.nacimiento,
+                 'region': persona.region,
+                 'comuna': persona.comuna,
+                 'alumnes': list(Alumne.objects.filter(profesor=request.user))}
             return render(request, "frontPage/dashboard_profe.html", context=c)
         else:
             raise Http404("Le usuarie no existe.")
@@ -148,10 +152,25 @@ def marca(request):
     return render(request, "frontPage/marca.html")
 
 
+def marca_profe(request):
+    alumnes = list(Alumne.objects.filter(profesor=request.user))
+    c = {'alumnes': alumnes}
+    return render(request, "frontPage/marca_profe.html", context=c)
+
+
+def mis_marcas(request):
+    marcas = list(Marca.objects.filter(user=request.user).order_by("fecha"))
+    c = {"marcas": marcas}
+    return render(request, "frontPage/mis_marcas.html", context=c)
+
+
 def marca_post(request):
     if request.method == 'POST':
+        if "alumne" in request.POST.keys():
+            user = Alumne.objects.get(username=request.POST["alumne"])
+        else:
+            user = request.user
         tipo = request.POST["tipo"]
-        user = request.user
         estilo = request.POST["estilo"]
         distancia = request.POST["distancia"]
         tiempo = request.POST["tiempo"]
@@ -272,3 +291,7 @@ def aceptar_amigue(request):
                                                   from_user=User.objects.get(pk=request.POST["amigue"]))
         solicitud.accept()
     return dashboard(request)
+
+
+def modo_recreativo(request):
+    return render(request, "frontPage/modo_recreativo.html")

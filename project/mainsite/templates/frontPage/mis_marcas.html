@@ -1,0 +1,23 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nata&#x1F4AF; | Tus marcas </title>
+</head>
+<body>
+
+A continuación puedes ver tus marcas ordenadas por fecha.
+
+{% if marcas %}
+    <ul>
+        {% for marca in marcas %}
+            <li>{{ marca.to_str }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Aún no has registrado marcas.</p>
+{% endif %}
+
+</body>
+</html>

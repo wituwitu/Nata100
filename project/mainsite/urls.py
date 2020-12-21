@@ -15,12 +15,15 @@ urlpatterns = [
     path('formulario_profe_post/', views.formulario_profe_post, name="formulario_profe_post"),
     path('dashboard/', views.dashboard, name="dashboard"),
     path('marca/', views.marca, name="marca"),
+    path('marca_profe/', views.marca_profe, name="marca_profe"),
     path('marca_post/', views.marca_post, name="marca_post"),
+    path('mis_marcas/', views.mis_marcas, name="mis_marcas"),
     path('ranking_select/', views.ranking_select, name="ranking_select"),
     path('ranking_comunal/', views.ranking_comunal_index, name="ranking_comunal"),
     path('ranking_regional/', views.ranking_regional_index, name="ranking_regional"),
     path('ranking_nacional/', views.ranking_nacional_index, name="ranking_nacional"),
     path('agregar_amigue/', views.agregar_amigue, name="agregar_amigue"),
     path('aceptar_amigue/', views.aceptar_amigue, name="aceptar_amigue"),
+    path('modo_recreativo/', views.modo_recreativo, name="modo_recreativo"),
     url(r'^friendship/', include('friendship.urls'))
 ]

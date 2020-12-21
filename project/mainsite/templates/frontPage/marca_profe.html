@@ -7,13 +7,23 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 <body>
-A continuación podrás agregar tu marca, seleccionando el ránking al cual quieres publicarla.
+A continuación podrás agregar una marca a algune de tus alumnes, seleccionando el ránking al cual publicarla.
 
 <form action="{% url 'marca_post' %}" method="post">
     {% csrf_token %}
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-body ml-3" style="font-size: 18px">
+
+                <div class="md-form mb-2">
+                    <label for="alumne">Alumne</label>
+                    <select id="alumne" name="alumne">
+                        <option value="" disabled selected>Seleccionar</option>
+                        {% for alumne in alumnes %}
+                            <option value="{{ alumne.username }}">{{ alumne.username }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <div class="md-form mb-2">
                     Estilo de nado <br>
@@ -75,10 +85,9 @@ A continuación podrás agregar tu marca, seleccionando el ránking al cual quie
         </div>
     </div>
 </form>
-
 <script src="{% static 'script-comunas.js' %}"></script>
 <script>
-document.getElementById("date").innerHTML = Date();
+    document.getElementById("date").innerHTML = Date();
 </script>
 </body>
 </html>
