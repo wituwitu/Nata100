@@ -307,7 +307,7 @@ def modo_recreativo_alumne(request):
 def modo_recreativo_profe(request):
     comentarios = Comentario.objects.filter(profe=request.user).order_by("-fecha")
     context = {"comentarios": comentarios,
-               "alumne_list": Alumne.objects.filter(profe=request.user).order_by("username")}
+               "alumne_list": Alumne.objects.filter(profesor=request.user).order_by("username")}
 
     return render(request, "frontPage/modo_recreativo_profe.html", context)
 
