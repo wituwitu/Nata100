@@ -14,14 +14,14 @@ A continuación puedes escribirle un comentario a une alumne.
     <input type="text" id="texto" name="texto"><br><br>
     Selecciona une alumne: <br>
     {% for alumne in alumne_list %}
-        <input type="radio" name="alumne" id="profe{{ forloop.counter }}" value="{{ prof.username }}">
-        <label for="profe{{ forloop.counter }}">{{ prof.username }}</label><br>
+        <input type="radio" name="alumne" id="alumne{{ forloop.counter }}" value="{{ alumne.username }}">
+        <label for="alumne{{ forloop.counter }}">{{ alumne.username }}</label><br>
     {% endfor %}
     <label for="fecha">Selecciona la fecha que asociar al comentario<br></label>
     <input type="date" id="fecha" name="fecha">
 </form>
 
-A continuación puedes ver los comentarios que han dejado tus profesores.
+A continuación puedes ver los comentarios que has dejado.
 {% if comentarios %}
     <ul>
     {% for comentario in comentarios %}
