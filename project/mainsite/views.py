@@ -298,14 +298,14 @@ def aceptar_amigue(request):
 
 
 def modo_recreativo_alumne(request):
-    comentarios = Comentario.objects.filter(alumne=request.user).order_by("-fecha")
+    comentarios = Comentario.objects.filter(alumne=Alumne.objects.get(username=request.user.username)).order_by("-fecha")
     context = {"comentarios": comentarios}
 
     return render(request, "frontPage/modo_recreativo_alumne.html", context)
 
 
 def modo_recreativo_profe(request):
-    comentarios = Comentario.objects.filter(profe=request.user).order_by("-fecha")
+    comentarios = Comentario.objects.filter(profe=Profe.objects.get(username=request.user.username)).order_by("-fecha")
     context = {"comentarios": comentarios,
                "alumne_list": Alumne.objects.filter(profesor=request.user).order_by("username")}
 
