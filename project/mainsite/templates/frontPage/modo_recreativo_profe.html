@@ -9,7 +9,8 @@
 
 A continuación puedes escribirle un comentario a une alumne.
 
-<form action="{% url 'comentario_post' %}">
+<form action="{% url 'comentario_post' %}" method="post">
+    {% csrf_token %}
     <label for="texto">Comentario:</label>
     <input type="text" id="texto" name="texto"><br><br>
     Selecciona une alumne: <br>
