@@ -75,4 +75,14 @@ class RankingAmigues(AbstractRanking):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
 
-# - Crear los modelos para usuarios (listo), marcas, ranking, amigos y comentarios
+class Comentario(models.Model):
+    profe = models.ForeignKey(Profe, on_delete=models.CASCADE, null=True)
+    alumne = models.ForeignKey(Alumne, on_delete=models.CASCADE, null=True)
+    fecha = models.DateField(blank=True, null=True)
+    texto = models.TextField(max_length=1024, blank=True, null=True)
+
+    def to_str(self):
+        return f"[{self.fecha}] Mensaje de {self.profe.username}: {self.texto}"
+
+    def to_str_prof(self):
+        return f"[{self.fecha}] Mensaje de {self.profe.username} a {self.alumne.username}: {self.texto}"

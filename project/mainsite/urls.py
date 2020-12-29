@@ -24,6 +24,8 @@ urlpatterns = [
     path('ranking_nacional/', views.ranking_nacional_index, name="ranking_nacional"),
     path('agregar_amigue/', views.agregar_amigue, name="agregar_amigue"),
     path('aceptar_amigue/', views.aceptar_amigue, name="aceptar_amigue"),
-    path('modo_recreativo/', views.modo_recreativo, name="modo_recreativo"),
+    path('modo_recreativo_profe/', views.modo_recreativo_profe, name="modo_recreativo_profe"),
+    path('modo_recreativo_alumne/', views.modo_recreativo_alumne, name="modo_recreativo_alumne"),
+    path('comentario_post/', views.comentario_post, name="comentario_post"),
     url(r'^friendship/', include('friendship.urls'))
 ]

@@ -4,7 +4,8 @@ from django.http.response import HttpResponse, HttpResponseRedirect, Http404
 from django.template import Context
 from django.views import generic
 
-from .models import User, Alumne, Profe, RankingNacional, RankingRegional, RankingComunal, Marca, RankingAmigues
+from .models import User, Alumne, Profe, RankingNacional, RankingRegional, RankingComunal, Marca, RankingAmigues, \
+    Comentario
 
 from .models import User, Alumne, Profe
 
@@ -273,6 +274,7 @@ def ranking_amigues_index(request):
     amigues = Friend.objects.friends(request.user)
     top_10 = Marca.objects.filter(user__in=amigues).exclude(publico=False).order_by("tiempo")[:10]
     context = {"top_10": top_10}
+
     return render(request, "frontPage/ranking_amigues.html", context)
 
 
@@ -282,6 +284,7 @@ def agregar_amigue(request):
         Friend.objects.add_friend(from_user=request.user,
                                   to_user=amigue,
                                   message="Seamos amigues en Nata100!")
+
     return dashboard(request)
 
 
@@ -290,8 +293,30 @@ def aceptar_amigue(request):
         solicitud = FriendshipRequest.objects.get(to_user=request.user,
                                                   from_user=User.objects.get(pk=request.POST["amigue"]))
         solicitud.accept()
+
     return dashboard(request)
 
 
-def modo_recreativo(request):
-    return render(request, "frontPage/modo_recreativo.html")
+def modo_recreativo_alumne(request):
+    comentarios = Comentario.objects.filter(alumne=request.user).order_by("-fecha")
+    context = {"comentarios": comentarios}
+
+    return render(request, "frontPage/modo_recreativo_alumne.html", context)
+
+
+def modo_recreativo_profe(request):
+    comentarios = Comentario.objects.filter(profe=request.user).order_by("-fecha")
+    context = {"comentarios": comentarios,
+               "alumne_list": Alumne.objects.filter(profe=request.user).order_by("username")}
+
+    return render(request, "frontPage/modo_recreativo_profe.html", context)
+
+
+def modo_recreativo_post(request):
+    if request.method == "POST":
+        _ = Comentario.objects.create(profe=request.user,
+                                      alumne=request.POST["alumne"],
+                                      fecha=request.POST["fecha"],
+                                      texto=request.POST["comentario"])
+
+    return modo_recreativo_profe(request)

@@ -1,0 +1,36 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nata&#x1F4AF; | Modo recreativo (Profe)</title>
+</head>
+<body>
+
+A continuación puedes escribirle un comentario a une alumne.
+
+<form action="{% url 'comentario_post' %}">
+    <label for="texto">Comentario:</label>
+    <input type="text" id="texto" name="texto"><br><br>
+    Selecciona une alumne: <br>
+    {% for alumne in alumne_list %}
+        <input type="radio" name="alumne" id="profe{{ forloop.counter }}" value="{{ prof.username }}">
+        <label for="profe{{ forloop.counter }}">{{ prof.username }}</label><br>
+    {% endfor %}
+    <label for="fecha">Selecciona la fecha que asociar al comentario<br></label>
+    <input type="date" id="fecha" name="fecha">
+</form>
+
+A continuación puedes ver los comentarios que han dejado tus profesores.
+{% if comentarios %}
+    <ul>
+    {% for comentario in comentarios %}
+        <li>{{ comentario.to_str_prof }}</li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No has registrado comentarios.</p>
+{% endif %}
+
+</body>
+</html>
