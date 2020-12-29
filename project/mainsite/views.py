@@ -312,7 +312,7 @@ def modo_recreativo_profe(request):
     return render(request, "frontPage/modo_recreativo_profe.html", context)
 
 
-def modo_recreativo_post(request):
+def comentario_post(request):
     if request.method == "POST":
         _ = Comentario.objects.create(profe=request.user,
                                       alumne=request.POST["alumne"],
