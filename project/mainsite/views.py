@@ -314,8 +314,8 @@ def modo_recreativo_profe(request):
 
 def comentario_post(request):
     if request.method == "POST":
-        _ = Comentario.objects.create(profe=request.user,
-                                      alumne=request.POST["alumne"],
+        _ = Comentario.objects.create(profe=Profe.objects.get(username=request.user.username),
+                                      alumne=Alumne.objects.get(username=request.POST["alumne"]),
                                       fecha=request.POST["fecha"],
                                       texto=request.POST["comentario"])
 
