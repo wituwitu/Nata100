@@ -133,13 +133,13 @@ def dashboard(request, context=None):
         persona = Alumne.objects.get(username=user.username)
         if persona:
             if context:
-                c = context | {'username': persona.username,
+                c = {**context, **{'username': persona.username,
                                'email': persona.email,
                                'nacimiento': persona.nacimiento,
                                'profe': persona.profesor,
                                'region': persona.region,
                                'comuna': persona.comuna,
-                               'solicitudes': Friend.objects.unrejected_requests(user=request.user)}
+                               'solicitudes': Friend.objects.unrejected_requests(user=request.user)}}
             else:
                 c = {'username': persona.username,
                      'email': persona.email,
@@ -154,13 +154,13 @@ def dashboard(request, context=None):
         if persona.exists():
             persona = persona[0]
             if context:
-                c = context | {'username': persona.username,
+                c = {**context, **{'username': persona.username,
                                'email': persona.email,
                                'nacimiento': persona.nacimiento,
                                'region': persona.region,
                                'comuna': persona.comuna,
                                'alumnes': list(
-                                   Alumne.objects.filter(profesor=Profe.objects.get(username=request.user.username)))}
+                                   Alumne.objects.filter(profesor=Profe.objects.get(username=request.user.username)))}}
             else:
                 c = {'username': persona.username,
                      'email': persona.email,
