@@ -153,13 +153,22 @@ def dashboard(request, context=None):
         persona = Profe.objects.filter(username=user.username)
         if persona.exists():
             persona = persona[0]
-            c = context | {'username': persona.username,
-                           'email': persona.email,
-                           'nacimiento': persona.nacimiento,
-                           'region': persona.region,
-                           'comuna': persona.comuna,
-                           'alumnes': list(
-                               Alumne.objects.filter(profesor=Profe.objects.get(username=request.user.username)))}
+            if context:
+                c = context | {'username': persona.username,
+                               'email': persona.email,
+                               'nacimiento': persona.nacimiento,
+                               'region': persona.region,
+                               'comuna': persona.comuna,
+                               'alumnes': list(
+                                   Alumne.objects.filter(profesor=Profe.objects.get(username=request.user.username)))}
+            else:
+                c = {'username': persona.username,
+                     'email': persona.email,
+                     'nacimiento': persona.nacimiento,
+                     'region': persona.region,
+                     'comuna': persona.comuna,
+                     'alumnes': list(
+                         Alumne.objects.filter(profesor=Profe.objects.get(username=request.user.username)))}
             return render(request, "frontPage/dashboard_profe.html", context=c)
         else:
             raise Http404("Le usuarie no existe.")
