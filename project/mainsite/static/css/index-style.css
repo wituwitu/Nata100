@@ -90,6 +90,13 @@ body {
     justify-content: center;
 }
 
+.error-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 .comments-container {
     display: flex;
     justify-content: center;

@@ -3,7 +3,9 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404
 from django.http.response import HttpResponse, HttpResponseRedirect, Http404
 from django.template import Context
+from django.utils.datastructures import MultiValueDictKeyError
 from django.views import generic
+from friendship.exceptions import AlreadyFriendsError
 
 from .models import User, Alumne, Profe, RankingNacional, RankingRegional, RankingComunal, Marca, RankingAmigues, \
     Comentario
@@ -125,29 +127,39 @@ def formulario_profe_post(request):
     return dashboard(request)
 
 
-def dashboard(request):
+def dashboard(request, context=None):
     user = request.user
     try:
         persona = Alumne.objects.get(username=user.username)
         if persona:
-            c = {'username': persona.username,
-                 'email': persona.email,
-                 'nacimiento': persona.nacimiento,
-                 'profe': persona.profesor,
-                 'region': persona.region,
-                 'comuna': persona.comuna,
-                 'solicitudes': Friend.objects.unrejected_requests(user=request.user)}
+            if context:
+                c = context | {'username': persona.username,
+                               'email': persona.email,
+                               'nacimiento': persona.nacimiento,
+                               'profe': persona.profesor,
+                               'region': persona.region,
+                               'comuna': persona.comuna,
+                               'solicitudes': Friend.objects.unrejected_requests(user=request.user)}
+            else:
+                c = {'username': persona.username,
+                     'email': persona.email,
+                     'nacimiento': persona.nacimiento,
+                     'profe': persona.profesor,
+                     'region': persona.region,
+                     'comuna': persona.comuna,
+                     'solicitudes': Friend.objects.unrejected_requests(user=request.user)}
             return render(request, "frontPage/dashboard_alumne.html", context=c)
     except ObjectDoesNotExist:
         persona = Profe.objects.filter(username=user.username)
         if persona.exists():
             persona = persona[0]
-            c = {'username': persona.username,
-                 'email': persona.email,
-                 'nacimiento': persona.nacimiento,
-                 'region': persona.region,
-                 'comuna': persona.comuna,
-                 'alumnes': list(Alumne.objects.filter(profesor=Profe.objects.get(username=request.user.username)))}
+            c = context | {'username': persona.username,
+                           'email': persona.email,
+                           'nacimiento': persona.nacimiento,
+                           'region': persona.region,
+                           'comuna': persona.comuna,
+                           'alumnes': list(
+                               Alumne.objects.filter(profesor=Profe.objects.get(username=request.user.username)))}
             return render(request, "frontPage/dashboard_profe.html", context=c)
         else:
             raise Http404("Le usuarie no existe.")
@@ -175,13 +187,17 @@ def marca_post(request):
             user = Alumne.objects.get(username=request.POST["alumne"])
         else:
             user = request.user
-        tipo = request.POST["tipo"]
-        estilo = request.POST["estilo"]
-        distancia = request.POST["distancia"]
-        fecha = request.POST["fecha"]
-        tiempo = request.POST["tiempo"]
-        comuna = request.POST["comunas"]
-        region = request.POST["regiones"]
+
+        try:
+            tipo = request.POST["tipo"]
+            estilo = request.POST["estilo"]
+            distancia = request.POST["distancia"]
+            fecha = request.POST["fecha"]
+            tiempo = request.POST["tiempo"]
+            comuna = request.POST["comunas"]
+            region = request.POST["regiones"]
+        except MultiValueDictKeyError:
+            return dashboard(request, context={"message": "Error: ¡Formato de marca inválido!"})
 
         m = Marca.objects.create(user=user,
                                  estilo=estilo,
@@ -255,6 +271,8 @@ def ranking_select(request):
 
 
 def ranking_comunal_index(request, comuna):
+    if comuna == "sin-region":
+        return dashboard(request, context={"message": "Error: ¡No se ha seleccionado comuna!"})
     try:
         ranking = RankingComunal.objects.get(comuna=comuna)
         top_10 = ranking.marcas.all().order_by("tiempo")[:10]
@@ -267,6 +285,8 @@ def ranking_comunal_index(request, comuna):
 
 
 def ranking_regional_index(request, region):
+    if region == "sin-region":
+        return dashboard(request, context={"message": "Error: ¡No se ha seleccionado región!"})
     try:
         ranking = RankingRegional.objects.get(region=region)
         top_10 = ranking.marcas.all().order_by("tiempo")[:10]
@@ -308,11 +328,13 @@ def ranking_propio_index(request):
 def agregar_amigue(request):
     if request.method == "POST":
         amigue = User.objects.get(pk=request.POST["amigue"])
-        Friend.objects.add_friend(from_user=request.user,
-                                  to_user=amigue,
-                                  message="Seamos amigues en Nata100!")
-
-    return dashboard(request)
+        try:
+            Friend.objects.add_friend(from_user=request.user,
+                                      to_user=amigue,
+                                      message="Seamos amigues en Nata100!")
+        except AlreadyFriendsError:
+            context = {'message': "Error: ¡Les usuaries ya son amigues!"}
+            return dashboard(request, context=context)
 
 
 def aceptar_amigue(request):
@@ -325,7 +347,8 @@ def aceptar_amigue(request):
 
 
 def modo_recreativo_alumne(request):
-    comentarios = Comentario.objects.filter(alumne=Alumne.objects.get(username=request.user.username)).order_by("-fecha")
+    comentarios = Comentario.objects.filter(alumne=Alumne.objects.get(username=request.user.username)).order_by(
+        "-fecha")
     context = {"comentarios": comentarios}
 
     return render(request, "frontPage/modo_recreativo_alumne.html", context)
