@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404
 from django.http.response import HttpResponse, HttpResponseRedirect, Http404
 from django.template import Context
@@ -174,6 +175,7 @@ def marca_post(request):
         tipo = request.POST["tipo"]
         estilo = request.POST["estilo"]
         distancia = request.POST["distancia"]
+        fecha = request.POST["fecha"]
         tiempo = request.POST["tiempo"]
         comuna = request.POST["comunas"]
         region = request.POST["regiones"]
@@ -182,6 +184,7 @@ def marca_post(request):
                                  estilo=estilo,
                                  distancia=distancia,
                                  tiempo=tiempo,
+                                 fecha=fecha,
                                  comuna=comuna,
                                  region=region,
                                  publico=True)
@@ -244,27 +247,41 @@ def ranking_select(request):
             return ranking_nacional_index(request)
         elif tipo == "amigues":
             return ranking_amigues_index(request)
+        elif tipo == "propio":
+            return ranking_propio_index(request)
 
 
 def ranking_comunal_index(request, comuna):
-    ranking = get_object_or_404(RankingComunal, comuna=comuna)
-    top_10 = ranking.marcas.all().order_by("tiempo")[:10]
+    try:
+        ranking = RankingComunal.objects.get(comuna=comuna)
+        top_10 = ranking.marcas.all().order_by("tiempo")[:10]
+    except ObjectDoesNotExist:
+        top_10 = None
+
     context = {"comuna": comuna, "top_10": top_10}
 
     return render(request, "frontPage/ranking_comunal.html", context)
 
 
 def ranking_regional_index(request, region):
-    ranking = get_object_or_404(RankingRegional, region=region)
-    top_10 = ranking.marcas.all().order_by("tiempo")[:10]
+    try:
+        ranking = RankingRegional.objects.get(region=region)
+        top_10 = ranking.marcas.all().order_by("tiempo")[:10]
+    except ObjectDoesNotExist:
+        top_10 = None
+
     context = {"region": region, "top_10": top_10}
 
     return render(request, "frontPage/ranking_regional.html", context)
 
 
 def ranking_nacional_index(request):
-    ranking = get_object_or_404(RankingNacional)
-    top_10 = ranking.marcas.all().order_by("tiempo")[:10]
+    try:
+        ranking = RankingNacional.objects.get()
+        top_10 = ranking.marcas.all().order_by("tiempo")[:10]
+    except ObjectDoesNotExist:
+        top_10 = None
+
     context = {"pais": "Chile", "top_10": top_10}
 
     return render(request, "frontPage/ranking_nacional.html", context)
@@ -276,6 +293,13 @@ def ranking_amigues_index(request):
     context = {"top_10": top_10}
 
     return render(request, "frontPage/ranking_amigues.html", context)
+
+
+def ranking_propio_index(request):
+    marcas = Marca.objects.filter(user=request.user).exclude(publico=False).order_by("fecha")
+    context = {"marcas": marcas}
+
+    return render(request, "frontPage/mis_marcas.html", context)
 
 
 def agregar_amigue(request):
@@ -319,6 +343,4 @@ def comentario_post(request):
                                       fecha=request.POST["fecha"],
                                       texto=request.POST["texto"])
 
-        print(c)
-
-    return modo_recreativo_profe(request)
+    return dashboard(request)

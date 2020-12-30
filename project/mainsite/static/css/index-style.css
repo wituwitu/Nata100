@@ -1,3 +1,14 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.welcome-text {
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
 .bg-titlebar {
     background-color: #121212;
     color: white;
@@ -12,10 +23,24 @@
     margin-left: 50%
 }
 
+#xd-btn {
+    background-color: #42a4c4;
+    color: #1a1a1a;
+    font-weight: 600;
+    font-size: 15px;
+    border-radius: 50px;
+}
+
 #log-in-btn:hover {
     background-color: white;
     box-shadow:
-        0 0 4px 2px #42a4c4;  /* inner white */
+            0 0 4px 2px #42a4c4;  /* inner white */
+}
+
+#xd-btn:hover {
+    background-color: white;
+    box-shadow:
+            0 0 4px 2px #42a4c4;  /* inner white */
 }
 
 .card-img-icon {
@@ -45,19 +70,43 @@
 
 #reg-btn:hover {
     box-shadow:
-        0 0 4px 2px #fff;  /* inner white */
+            0 0 4px 2px #fff;  /* inner white */
+}
+
+#left {
+    width: 400px;
+    float: left;
+}
+
+#right {
+    /* Change this to whatever the width of your left column is*/
+}
+.clear {
+    clear: both;
+}
+
+.witu-container {
+    display: flex;
+    justify-content: center;
+}
+
+.comments-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 header.masthead {
-  position: relative;
-  background-color: #ffffff;
-  background-size: cover;
-  padding-top: 0;
-  padding-bottom: 8rem;
+    position: relative;
+    background-color: #ffffff;
+    background-size: cover;
+    padding-top: 0;
+    padding-bottom: 8rem;
 }
 
 .showcase .showcase-text {
-  padding: 3rem;
+    padding: 3rem;
 }
 
 .showcase .showcase-img {
@@ -119,6 +168,11 @@ header.masthead {
     animation: animate 18s linear infinite;
 }
 
+.waves-container{
+    position: relative;
+    height: 150px;
+}
+
 @keyframes animate{
     0%{
         transform: translateX(0) translateZ(0) scaleY(1);
@@ -156,7 +210,6 @@ header.masthead {
 .features-icons .features-icons-item .features-icons-icon {
     height: 8rem;
     margin-left: 5%;
-
 }
 
 .form-textbox {
@@ -177,14 +230,16 @@ header.masthead {
 .form-btn:hover {
     background-color: white;
     box-shadow:
-        0 0 4px 2px #fff;  /* inner white */
+            0 0 4px 2px #fff;  /* inner white */
 }
 
 .modal-content{
     background-color: #212121;
+    color: whitesmoke;
     border-radius: 15px;
 }
 
 .footer {
+    margin-top: auto;
     background-color: #0b0a0a;
 }

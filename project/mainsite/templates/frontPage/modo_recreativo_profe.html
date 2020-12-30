@@ -2,38 +2,115 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile-style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index-style.css' %}">
+    <!-- Optional JavaScript -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
     <title>Nata&#x1F4AF; | Modo recreativo (Profe)</title>
 </head>
 <body>
 
-A continuación puedes escribirle un comentario a une alumne.
+<nav class="navbar bg-titlebar static-top">
+    <div class="container">
+        <a class="navbar-brand" style="color: white" href="{% url 'dashboard' %}"> <img class="logo_smol" src="{% static '/images/logo_smol.png' %}" alt="Nata100"/></a>
+        <a href="{% url 'logout' %}" id="log-in-btn" class="btn px-4">Cerrar sesión</a>
+    </div>
+</nav>
+<br>
+<div class="masthead welcome-text text-dark text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                <h3>Modo recreativo</h3>
+            </div>
+        </div>
+    </div>
+</div>
 
-<form action="{% url 'comentario_post' %}" method="post">
-    {% csrf_token %}
-    <label for="texto">Comentario:</label>
-    <input type="text" id="texto" name="texto"><br><br>
-    Selecciona une alumne: <br>
-    {% for alumne in alumne_list %}
-        <input type="radio" name="alumne" id="alumne{{ forloop.counter }}" value="{{ alumne.username }}">
-        <label for="alumne{{ forloop.counter }}">{{ alumne.username }}</label><br>
-    {% endfor %}
-    <label for="fecha">Selecciona la fecha que asociar al comentario<br></label>
-    <input type="date" id="fecha" name="fecha"><br>
-    <button type="submit">Continuar</button>
-</form>
 
 
-A continuación puedes ver los comentarios que has dejado.
-{% if comentarios %}
-    <ul>
-    {% for comentario in comentarios %}
-        <li>{{ comentario.to_str_prof }}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No has registrado comentarios.</p>
-{% endif %}
+<div class="text-dark">
+    <div class="container comments-container">
 
+        A continuación puedes escribirle un comentario a une alumne.
+
+        <form action="{% url 'comentario_post' %}" method="post">
+            {% csrf_token %}
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body ml-3" style="font-size: 18px">
+                        <div class="md-form mb-2">
+                            <i class="fas fa-user prefix grey-text"></i>
+                            <label for="texto">Comentario:</label><br>
+                            <textarea name="texto" rows="10" cols="30"></textarea>
+                            <br><br>
+                        </div>
+
+                        <div class="md-form mb-2">
+                            <i class="fas fa-envelope prefix grey-text"></i>
+                            Selecciona une alumne: <br>
+                            {% for alumne in alumne_list %}
+                                <input type="radio" name="alumne" id="alumne{{ forloop.counter }}" value="{{ alumne.username }}">
+                                <label for="alumne{{ forloop.counter }}">{{ alumne.username }}</label><br>
+                            {% endfor %}
+                        </div>
+
+                        <div class="md-form mb-2">
+                            <i class="fas fa-envelope prefix grey-text"></i>
+                            <label for="fecha">Selecciona la fecha que asociar al comentario:<br></label>
+                            <input type="date" id="fecha" name="fecha"><br>
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="submit" class="btn form-btn px-5">Continuar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        <p>A continuación puedes ver los comentarios que has dejado.</p>
+        {% if comentarios %}
+            <ul>
+                {% for comentario in comentarios %}
+                    <li>{{ comentario.to_str_prof }}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No has registrado comentarios.</p>
+        {% endif %}
+    </div>
+</div>
+
+
+<footer class="footer text-white text-center">
+
+    <div class="waves-container">
+        <div class="line line-1">
+            <div class="wave wave1" style="background-image: url({% static '/images/1.png' %})"></div>
+        </div>
+        <div class="line line-2">
+            <div class="wave wave2" style="background-image: url({% static '/images/2.png' %})"></div>
+        </div>
+        <div class="line line-3">
+            <div class="wave wave3" style="background-image: url({% static '/images/3.png' %})"></div>
+        </div>
+    </div>
+
+    © Nata&#x1F4AF; 2020
+    <br>
+    Catalina Gamboa • Bárbara Rocco • Claudia San Martín • Diego Wistuba
+</footer>
 </body>
 </html>

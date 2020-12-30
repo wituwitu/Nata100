@@ -3,92 +3,176 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index-style.css' %}">
+    <!-- Optional JavaScript -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <title>Nata&#x1F4AF; | Dashboard (Alumne)</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
+
 <body>
-Tus datos: <br>
-Nombre: {{ username }}<br>
-E-mail: {{ email }}<br>
-Fecha de nacimiento: {{ nacimiento }}<br>
-Profesor(a) asociado/a: {{ profe }}<br>
-Región: {{ region }}<br>
-Comuna: {{ comuna }}<br>
-Amigues: {% friends request.user %}<br>
-Tienes {% friend_request_count request.user %} solicitud(es) de amistad pendientes: <br>
 
-{% if solicitudes %}
-    <form action="{% url 'aceptar_amigue' %}" method="post">
-        {% csrf_token %}
-        {% for solicitud in solicitudes %}
-            <input type="radio" id="{{ solicitud.from_user }}" name="amigue" value="{{ solicitud.from_user }}">
-            <label for="{{ solicitud.from_user }}">{{ solicitud.from_user }}</label><br>
-        {%  endfor %}
-        <button type="submit">Aceptar solicitud(es)</button>
-    </form>
-{% else %}
-    <p>No tienes solicitudes.</p>
-{% endif %}
-
-<br>
-
-Agrega a une amigue:
 <form action="{% url 'agregar_amigue' %}" method="post">
     {% csrf_token %}
-    <label for="amigue">Nombre completo</label><br>
-    <input type="text" id="amigue" name="amigue"><br>
-    <button type="submit">Enviar solicitud</button>
-</form>
-
-<br>
-
-<a href="{% url 'modo_recreativo_alumne' %}">Acceder al modo recreativo</a><br>
-
-<a href="{% url 'mis_marcas' %}">Revisa tus marcas</a><br>
-<a href="{% url 'marca' %}">Ingresa una marca</a><br>
-<br>
-Revisa un ránking:
-
-<form action="{% url 'ranking_select' %}" method="post">
-    {% csrf_token %}
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-body ml-3" style="font-size: 18px">
-                <div class="md-form mb-2">
-                    <input type="radio" id="comunal" name="tipo" value="comunal">
-                    <label for="comunal">Comunal</label><br>
-                    <input type="radio" id="regional" name="tipo" value="regional">
-                    <label for="regional">Regional</label><br>
-                    <input type="radio" id="nacional" name="tipo" value="nacional">
-                    <label for="nacional">Nacional</label><br>
-                    <input type="radio" id="amigues" name="tipo" value="amigues">
-                    <label for="amigues">Amigues</label><br>
+    <div class="modal fade" id="modalFriendForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Agregar amigue</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-
-                <div class="md-form mb-2">
-                    <i class="fas fa-envelope prefix grey-text"></i>
-                    <label for="regiones">Región</label>
-                    <select id="regiones" name="regiones"></select>
+                <div class="modal-body ml-3" style="font-size: 18px">
+                    <label for="amigue">Nombre completo</label><br>
+                    <input type="text" id="amigue" name="amigue"><br>
                 </div>
-
-                <div class="md-form mb-2">
-                    <i class="fas fa-envelope prefix grey-text"></i>
-                    <label for="comunas">Comuna</label>
-                    <select id="comunas" name="comunas"></select>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn form-btn px-5">Enviar solicitud</button>
                 </div>
-
-            </div>
-
-            <div class="modal-footer d-flex justify-content-center">
-                <button type="submit" class="btn form-btn px-5">Consultar</button>
             </div>
         </div>
     </div>
 </form>
 
-<a href="{% url 'formulario_alumne' %}">Modificar tu información</a><br>
-<a href="{% url 'logout' %}">Cerrar sesión</a><br>
+<form action="{% url 'ranking_select' %}" method="post">
+    {% csrf_token %}
+    <div class="modal fade" id="modalRankingForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Seleccionar ránking</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body ml-3" style="font-size: 18px">
+                    <div class="md-form mb-2">
+                        <input type="radio" id="comunal" name="tipo" value="comunal">
+                        <label for="comunal">Comunal</label><br>
+                        <input type="radio" id="regional" name="tipo" value="regional">
+                        <label for="regional">Regional</label><br>
+                        <input type="radio" id="nacional" name="tipo" value="nacional">
+                        <label for="nacional">Nacional</label><br>
+                        <input type="radio" id="amigues" name="tipo" value="amigues">
+                        <label for="amigues">Amigues</label><br>
+                        <input type="radio" id="propio" name="tipo" value="propio">
+                        <label for="propio">Propio</label><br>
+                    </div>
+
+                    <div class="md-form mb-2">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <label for="regiones">Región:</label><br>
+                        <select id="regiones" name="regiones"></select>
+                    </div>
+
+                    <div class="md-form mb-2">
+                        <i class="fas fa-envelope prefix grey-text"></i>
+                        <label for="comunas">Comuna:</label><br>
+                        <select id="comunas" name="comunas"></select>
+                    </div>
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center">
+                    <button type="submit" class="btn form-btn px-5">Consultar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<nav class="navbar bg-titlebar static-top">
+    <div class="container">
+        <a class="navbar-brand" style="color: white" href="{% url 'dashboard' %}"> <img class="logo_smol" src="{% static '/images/logo_smol.png' %}" alt="Nata100"/></a>
+        <a href="{% url 'logout' %}" id="log-in-btn" class="btn px-4">Cerrar sesión</a>
+    </div>
+</nav>
+<br>
+<div class="masthead welcome-text text-dark text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                <h3>¡Bienvenide, {{ username }}!</h3>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="text-dark">
+    <div class="container witu-container">
+        <div id="left">
+            <h4>Tus datos:</h4>
+            <b>E-mail:</b>
+            {{ email }}<br>
+            <b>Nacimiento:</b>
+            {{ nacimiento }}<br>
+            <b>Región:</b>
+            {{ region }}<br>
+            <b>Comuna:</b>
+            {{ comuna }}<br>
+            <b>Amigues:</b>
+            {% friends request.user %}
+        </div>
+        <div id="right">
+            <a href="{% url 'modo_recreativo_alumne' %}" id="xd-btn" class="btn px-4">Modo recreativo</a><br><br>
+            <a href="{% url 'marca' %}" id="xd-btn" class="btn px-4">Ingresa una marca</a><br><br>
+            <button type="button" id="xd-btn" class="btn px-4" data-toggle="modal" data-target="#modalRankingForm">Revisa un ránking</button><br><br>
+            <a href="{% url 'formulario_alumne' %}" id="xd-btn" class="btn px-4">Modificar tu información</a><br><br>
+            <button type="button" id="xd-btn" class="btn px-4" data-toggle="modal" data-target="#modalFriendForm">Agrega a une amigue</button><br><br>
+
+            Tienes {% friend_request_count request.user %} solicitud(es) de amistad pendientes.<br>
+
+            {% if solicitudes %}
+                <form action="{% url 'aceptar_amigue' %}" method="post">
+                    {% csrf_token %}
+                    {% for solicitud in solicitudes %}
+                        <input type="radio" id="{{ solicitud.from_user }}" name="amigue" value="{{ solicitud.from_user }}">
+                        <label for="{{ solicitud.from_user }}">{{ solicitud.from_user }}</label><br>
+                    {%  endfor %}
+                    <button type="submit" class="btn form-btn px-5">Aceptar solicitud</button>
+                </form>
+            {% else %}
+            {% endif %}
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>
+
 <script src="{% static 'script-comunas.js' %}"></script>
+
+<footer class="footer text-white text-center">
+
+    <div class="waves-container">
+        <div class="line line-1">
+            <div class="wave wave1" style="background-image: url({% static '/images/1.png' %})"></div>
+        </div>
+        <div class="line line-2">
+            <div class="wave wave2" style="background-image: url({% static '/images/2.png' %})"></div>
+        </div>
+        <div class="line line-3">
+            <div class="wave wave3" style="background-image: url({% static '/images/3.png' %})"></div>
+        </div>
+    </div>
+
+    © Nata&#x1F4AF; 2020
+    <br>
+    Catalina Gamboa • Bárbara Rocco • Claudia San Martín • Diego Wistuba
+</footer>
 </body>
 </html>

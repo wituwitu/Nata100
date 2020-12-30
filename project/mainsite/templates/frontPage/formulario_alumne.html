@@ -2,53 +2,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Nata&#x1F4AF; | Formulario de Alumne </title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/profile-style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/index-style.css' %}">
+    <!-- Optional JavaScript -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <title>Nata&#x1F4AF; | Formulario de Alumne</title>
 </head>
+
 <body>
 
-¡Bienvenid@ a Nata100, {{ username }}! Contesta las siguientes preguntas para completar tu perfil.
-
-<form action="{% url 'formulario_alumne_post' %}" method="post">
-    {% csrf_token %}
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body ml-3" style="font-size: 18px">
-                    <div class="md-form mb-2">
-                        <i class="fas fa-user prefix grey-text"></i>
-                        <label for="nacimiento">Fecha de nacimiento</label>
-                        <input type="date" id="nacimiento" name="nacimiento" class="form-control validate form-textbox">
-                    </div>
-
-                    <div class="md-form mb-2">
-                        <i class="fas fa-envelope prefix grey-text"></i>
-                        <label for="regiones">Región</label>
-                        <select id="regiones" name="regiones"></select>
-                    </div>
-
-                    <div class="md-form mb-2">
-                        <i class="fas fa-envelope prefix grey-text"></i>
-                        <label for="comunas">Comuna</label>
-                        <select id="comunas" name="comunas"></select>
-                    </div>
-
-                    <div class="md-form mb-2">
-                        <i class="fas fa-envelope prefix grey-text"></i>
-                        Asóciate a un(a) profesor(a) <br>
-                        {% for prof in profe_list %}
-                            <input type="radio" name="profe" id="profe{{ forloop.counter }}" value="{{ prof.username }}">
-                            <label for="profe{{ forloop.counter }}">{{ prof.username }}</label><br>
-                        {% endfor %}
-                    </div>
-
-                </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button type="submit" class="btn form-btn px-5">Continuar</button>
-                </div>
+<nav class="navbar bg-titlebar static-top">
+    <div class="container">
+        <a class="navbar-brand" style="color: white" href="{% url 'dashboard' %}"> <img class="logo_smol" src="{% static '/images/logo_smol.png' %}" alt="Nata100"/></a>
+        <a href="{% url 'logout' %}" id="log-in-btn" class="btn px-4">Cerrar sesión</a>
+    </div>
+</nav>
+<br>
+<div class="masthead welcome-text text-dark text-center">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-10 col-lg-8 col-xl-7 mx-auto">
+                <h3>Formulario de alumne</h3>
             </div>
         </div>
-</form>
+    </div>
+</div>
+
+<div class="text-dark">
+    <div class="container comments-container">
+        <form action="{% url 'formulario_alumne_post' %}" method="post">
+            {% csrf_token %}
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body ml-3" style="font-size: 18px">
+                        <div class="md-form mb-2">
+                            <i class="fas fa-user prefix grey-text"></i>
+                            <label for="nacimiento">Fecha de nacimiento</label>
+                            <input type="date" id="nacimiento" name="nacimiento" class="form-control validate form-textbox">
+                        </div>
+
+                        <div class="md-form mb-2">
+                            <i class="fas fa-envelope prefix grey-text"></i>
+                            <label for="regiones">Región</label>
+                            <select id="regiones" name="regiones"></select>
+                        </div>
+
+                        <div class="md-form mb-2">
+                            <i class="fas fa-envelope prefix grey-text"></i>
+                            <label for="comunas">Comuna</label>
+                            <select id="comunas" name="comunas"></select>
+                        </div>
+
+                        <div class="md-form mb-2">
+                            <i class="fas fa-envelope prefix grey-text"></i>
+                            Asóciate a un(a) profesor(a) <br>
+                            {% for prof in profe_list %}
+                                <input type="radio" name="profe" id="profe{{ forloop.counter }}" value="{{ prof.username }}">
+                                <label for="profe{{ forloop.counter }}">{{ prof.username }}</label><br>
+                            {% endfor %}
+                        </div>
+
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center">
+                        <button type="submit" class="btn form-btn px-5">Continuar</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
 <script src="{% static 'script-comunas.js' %}"></script>
+<footer class="footer text-white text-center">
+
+    <div class="waves-container">
+        <div class="line line-1">
+            <div class="wave wave1" style="background-image: url({% static '/images/1.png' %})"></div>
+        </div>
+        <div class="line line-2">
+            <div class="wave wave2" style="background-image: url({% static '/images/2.png' %})"></div>
+        </div>
+        <div class="line line-3">
+            <div class="wave wave3" style="background-image: url({% static '/images/3.png' %})"></div>
+        </div>
+    </div>
+
+    © Nata&#x1F4AF; 2020
+    <br>
+    Catalina Gamboa • Bárbara Rocco • Claudia San Martín • Diego Wistuba
+</footer>
 </body>
 </html>
