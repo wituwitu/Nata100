@@ -94,17 +94,20 @@ def formulario_profe(request):
 
 def formulario_alumne_post(request):
     user = request.user
-    if user.is_authenticated:
+    persona = Alumne.objects.get(username=user.username)
+    if persona.is_authenticated:
         if request.method == 'POST':
+            print(list(request.POST.values()))
             nacimiento = request.POST["nacimiento"]
             region = request.POST["regiones"]
             comuna = request.POST["comunas"]
             profe = request.POST["profe"]
-            user.nacimiento = nacimiento
-            user.region = region
-            user.comuna = comuna
-            user.profesor = Profe.objects.get(pk=profe)
-            user.save()
+            persona.nacimiento = nacimiento
+            persona.region = region
+            persona.comuna = comuna
+            persona.profesor = Profe.objects.get(pk=profe)
+            print(persona.profesor.username)
+            persona.save()
     return dashboard(request)
 
 
@@ -124,18 +127,18 @@ def formulario_profe_post(request):
 
 def dashboard(request):
     user = request.user
-    persona = Alumne.objects.filter(username=user.username)
-    if persona.exists():
-        persona = persona[0]
-        c = {'username': persona.username,
-             'email': persona.email,
-             'nacimiento': persona.nacimiento,
-             'profe': persona.profesor,
-             'region': persona.region,
-             'comuna': persona.comuna,
-             'solicitudes': Friend.objects.unrejected_requests(user=request.user)}
-        return render(request, "frontPage/dashboard_alumne.html", context=c)
-    else:
+    try:
+        persona = Alumne.objects.get(username=user.username)
+        if persona:
+            c = {'username': persona.username,
+                 'email': persona.email,
+                 'nacimiento': persona.nacimiento,
+                 'profe': persona.profesor,
+                 'region': persona.region,
+                 'comuna': persona.comuna,
+                 'solicitudes': Friend.objects.unrejected_requests(user=request.user)}
+            return render(request, "frontPage/dashboard_alumne.html", context=c)
+    except ObjectDoesNotExist:
         persona = Profe.objects.filter(username=user.username)
         if persona.exists():
             persona = persona[0]
@@ -144,7 +147,7 @@ def dashboard(request):
                  'nacimiento': persona.nacimiento,
                  'region': persona.region,
                  'comuna': persona.comuna,
-                 'alumnes': list(Alumne.objects.filter(profesor=request.user))}
+                 'alumnes': list(Alumne.objects.filter(profesor=Profe.objects.get(username=request.user.username)))}
             return render(request, "frontPage/dashboard_profe.html", context=c)
         else:
             raise Http404("Le usuarie no existe.")
